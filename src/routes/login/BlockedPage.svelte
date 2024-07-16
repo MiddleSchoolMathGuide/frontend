@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let reason: string = "Your access to MSMG has been blocked";
+  export let reason: string = "You cannot access this part of MSMG";
 </script>
 
 <div class="blocked-page">

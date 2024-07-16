@@ -11,16 +11,14 @@
 
 <style>
   .container {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     height: 100vh;
   }
 
   .login {
-    max-width: 300px;
+    max-width: 400px;
     text-align: center;
     border: 1px solid #ccc;
     padding: 20px;

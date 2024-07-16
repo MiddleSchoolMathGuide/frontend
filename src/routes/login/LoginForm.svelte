@@ -18,9 +18,9 @@
 
       const data = await response.json();
       if (response.ok) {
-        // change later if home page changes
-        console.log(response);
-        () => (window.location.href = "/");
+        // change later if home/me page changes
+        console.log(response.json);
+        window.location.href = "../me";
       } else {
         console.error("Login failed:", data.message);
       }

@@ -1,5 +1,11 @@
 <script lang="ts">
   import Login from "./LoginContainer.svelte";
+  import BlockedPage from "./BlockedPage.svelte";
 </script>
 
-<Login />
+<!-- Implement Blocked condition -->
+{#if false}
+  <BlockedPage />
+{:else}
+  <Login />
+{/if}

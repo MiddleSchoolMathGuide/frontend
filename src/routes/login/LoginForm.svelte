@@ -20,7 +20,7 @@
       if (response.ok) {
         // change later if home/me page changes
         console.log(response.json);
-        window.location.href = "/users/me";
+        window.location.href = "/user/me";
       } else {
         console.error("Login failed:", data.message);
       }

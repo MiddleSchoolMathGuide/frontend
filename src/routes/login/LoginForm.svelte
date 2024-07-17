@@ -3,6 +3,7 @@
   let password: string = "";
 
   const handleLogin = async () => {
+    console.log('??');
     try {
       const response = await fetch("/auth/login", {
         method: "POST",
@@ -12,7 +13,7 @@
         },
         body: JSON.stringify({
           username,
-          password_hash: hash(password),
+          password_hash: sha256(password),
         }),
       });
 
@@ -29,9 +30,12 @@
     }
   };
 
-  // No Hashing yet, implement
-  function hash(password: string): string {
-    return password;
+  async function sha256(data: string): Promise<string> {
+    return Array.from(
+      new Uint8Array(
+        await crypto.subtle.digest("SHA-256", new TextEncoder().encode(data))
+      )
+    ).reduce((acc, b) => acc + b.toString(16).padStart(2, "0"), "");
   }
 </script>
 
@@ -52,7 +56,7 @@
   />
 </div>
 <div class="form-control">
-  <button on:click={() => handleLogin} class="login-button">Login</button>
+  <button on:click={() => handleLogin()} class="login-button">Login</button>
 </div>
 
 <style>

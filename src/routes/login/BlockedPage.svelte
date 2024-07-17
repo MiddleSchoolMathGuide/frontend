@@ -9,7 +9,6 @@
   <p>{reason}</p>
 </div>
 
-
 <style>
   .blocked-page {
     max-width: 600px;

@@ -42,7 +42,7 @@
   <input
     class="usernm"
     type="text"
-    placeholder="E-mail"
+    placeholder="Username"
     bind:value={username}
   />
 </div>

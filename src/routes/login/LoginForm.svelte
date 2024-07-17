@@ -3,6 +3,7 @@
   let password: string = "";
 
   const handleLogin = async () => {
+    console.log('??');
     try {
       const response = await fetch("/auth/login", {
         method: "POST",
@@ -55,7 +56,7 @@
   />
 </div>
 <div class="form-control">
-  <button on:click={() => handleLogin} class="login-button">Login</button>
+  <button on:click={() => handleLogin()} class="login-button">Login</button>
 </div>
 
 <style>

@@ -3,7 +3,6 @@
   let password: string = "";
 
   const handleLogin = async () => {
-    console.log('??');
     try {
       const response = await fetch("/auth/login", {
         method: "POST",
@@ -13,14 +12,14 @@
         },
         body: JSON.stringify({
           username,
-          password_hash: sha256(password),
+          password_hash: await sha256(password),
         }),
       });
 
       const data = await response.json();
       if (response.ok) {
         // change later if home page changes
-        console.log(response.json);
+        console.log(response);
         () => (window.location.href = "/");
       } else {
         console.error("Login failed:", data.message);

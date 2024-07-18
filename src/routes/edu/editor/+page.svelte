@@ -14,7 +14,7 @@
   onMount(() => {
     const dynamicDataDiv = document.getElementById("dynamic-data");
     if (dynamicDataDiv) {
-      const dataMessage = dynamicDataDiv.getAttribute("data-message");
+      const dataMessage = dynamicDataDiv.getAttribute("data");
       if (dataMessage) {
         /* TODO: Handle parsing error */
         topic = JSON.parse(dataMessage);

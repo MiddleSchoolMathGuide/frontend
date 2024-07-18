@@ -3,6 +3,22 @@
   import Unit from "./Unit.svelte";
 
   export let topic: ITopic;
+
+  export function sendTopic() {
+    fetch("/edu/editor", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ok: true,
+        content: topic,
+      }),
+    }).then((_response) => {
+      /* TODO: Handle exceptions */
+    });
+  }
 </script>
 
 <div class="topic-container">
@@ -15,15 +31,10 @@
     <input id="title" bind:value={topic.title} placeholder="Title" required />
 
     <label for="desc">Description</label>
-    <input
-      id="desc"
-      bind:value={topic.description}
-      placeholder="Description"
-      required
-    />
+    <input id="desc" bind:value={topic.description} placeholder="Description" />
 
     <label for="icon">Icon URL</label>
-    <input id="icon" bind:value={topic.icon} placeholder="Icon URL" required />
+    <input id="icon" bind:value={topic.icon} placeholder="Icon URL" />
 
     <label for="status">Status</label>
     <input
@@ -33,7 +44,9 @@
       required
     />
 
-    <button type="submit" class="submit-button">Save</button>
+    <button on:click={() => sendTopic()} type="submit" class="submit-button">
+      Save
+    </button>
   </form>
 </div>
 

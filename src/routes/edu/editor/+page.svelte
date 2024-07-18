@@ -11,7 +11,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content: JSON.stringify(topic)
+        content: topic
       }),
     }).then((response) => {
       /* TODO: Handle exceptions */

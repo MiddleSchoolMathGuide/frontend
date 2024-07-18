@@ -10,8 +10,28 @@
 {/each}
 
 <form>
-  <input id="title" bind:innerText={topic.title} contenteditable="true" />
-  <input id="desc" bind:innerText={topic.description} contenteditable="true" />
-  <input id="icon" bind:innerText={topic.icon} contenteditable="true" />
-  <input id="status" bind:innerText={topic.status} contenteditable="true" />
+  <input
+    id="title"
+    bind:value={topic.title}
+    contenteditable="true"
+    placeholder="Title"
+  />
+  <input
+    id="desc"
+    bind:value={topic.description}
+    contenteditable="true"
+    placeholder="Description"
+  />
+  <input
+    id="icon"
+    bind:value={topic.icon}
+    contenteditable="true"
+    placeholder="Icon URL"
+  />
+  <input
+    id="status"
+    bind:value={topic.status}
+    contenteditable="true"
+    placeholder="Status"
+  />
 </form>

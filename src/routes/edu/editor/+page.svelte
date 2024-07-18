@@ -16,7 +16,6 @@
       }),
     }).then((response) => {
       /* TODO: Handle exceptions */
-      console.log(response);
     });
   }
 
@@ -34,7 +33,7 @@
       const dataMessage = dynamicDataDiv.getAttribute("data");
       if (dataMessage) {
         /* TODO: Handle parsing error */
-        topic = JSON.parse(dataMessage);
+        topic = JSON.parse(dataMessage).data;
       }
     }
   });

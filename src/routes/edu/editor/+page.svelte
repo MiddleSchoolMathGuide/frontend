@@ -11,13 +11,13 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content: topic
+        ok: true,
+        content: topic,
       }),
     }).then((response) => {
       /* TODO: Handle exceptions */
       console.log(response);
     });
-
   }
 
   let topic: ITopic = {

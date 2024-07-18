@@ -3,6 +3,23 @@
   import { Status, type ITopic } from "$lib/types/edu.type";
   import { onMount } from "svelte";
 
+  function sendTopic() {
+    fetch("/edu/editor", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content: JSON.stringify(topic)
+      }),
+    }).then((response) => {
+      /* TODO: Handle exceptions */
+      console.log(response);
+    });
+
+  }
+
   let topic: ITopic = {
     description: "",
     icon: "",
@@ -23,4 +40,5 @@
   });
 </script>
 
+<button on:click={() => sendTopic()}>Save</button>
 <Topic {topic} />

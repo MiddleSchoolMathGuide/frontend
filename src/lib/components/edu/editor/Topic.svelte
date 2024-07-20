@@ -5,7 +5,7 @@
   export let topic: ITopic;
 
   export function sendTopic() {
-    fetch("/edu/editor", {
+    fetch(window.location.href, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -15,8 +15,16 @@
         ok: true,
         content: topic,
       }),
-    }).then((_response) => {
-      /* TODO: Handle exceptions */
+    }).then((response) => {
+      if (response.ok) {
+        /* Force reload to update ID-s */
+        /* TODO: NON-IDEAL, IMPLEMENT UPDATE STREAMING */
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("topic", topic.title);
+
+        /* This auto-refreshes */
+        window.location.search = searchParams.toString();
+      }
     });
   }
 

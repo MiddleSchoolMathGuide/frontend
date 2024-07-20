@@ -25,13 +25,16 @@
       topic.units = [];
     }
 
-    topic.units.push({
-      title: "Untitled unit",
-      description: "Please fill out needed required fields!",
-      icon: "",
-      lessons: [],
-      status: Status.Default,
-    });
+    topic.units = [
+      ...topic.units,
+      {
+        title: "Untitled unit",
+        description: "Please fill out needed required fields!",
+        icon: "",
+        lessons: [],
+        status: Status.Default,
+      },
+    ];
   }
 </script>
 

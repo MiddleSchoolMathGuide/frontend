@@ -27,10 +27,6 @@
   }
 </script>
 
-{#each unit.lessons ?? [] as lesson}
-  <Lesson {lesson} />
-{/each}
-
 <div class="unit-container">
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->

@@ -1,6 +1,7 @@
 <script lang="ts">
   import Topic from "$lib/components/edu/editor/Topic.svelte";
   import { Status, type ITopic } from "$lib/types/edu.type";
+  import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
   import { onMount } from "svelte";
 
   let topic: ITopic = {
@@ -15,10 +16,18 @@
     const dynamicDataDiv = document.getElementById("dynamic-data");
     if (dynamicDataDiv) {
       const dataMessage = dynamicDataDiv.getAttribute("data");
-      if (dataMessage) {
-        /* TODO: Handle parsing error */
-        topic = JSON.parse(dataMessage).data;
+      if (!dataMessage) {
+        return;
       }
+
+      /* TODO: Handle parsing error */
+      let rdw: ResponseDataWrapper<ITopic> = JSON.parse(dataMessage);
+      if (!rdw.ok || rdw.data === null) {
+        console.error(rdw.msg);
+        return;
+      }
+
+      topic = rdw.data;
     }
   });
 </script>

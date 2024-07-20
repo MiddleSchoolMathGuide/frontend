@@ -39,12 +39,11 @@
 </script>
 
 <div class="topic-container">
-  <button on:click={() => addUnit()}>Add new unit</button>
-  {#each topic.units as unit}
-    <Unit {unit} />
-  {/each}
-
   <form class="topic-form">
+    <button on:click={() => sendTopic()} type="submit" class="submit-button">
+      Save
+    </button>
+
     <label for="title">Title</label>
     <input id="title" bind:value={topic.title} placeholder="Title" required />
 
@@ -61,11 +60,12 @@
       placeholder="Status"
       required
     />
-
-    <button on:click={() => sendTopic()} type="submit" class="submit-button">
-      Save
-    </button>
   </form>
+
+  <button on:click={() => addUnit()}>Add new unit</button>
+  {#each topic.units as unit}
+    <Unit {unit} />
+  {/each}
 </div>
 
 <style>
@@ -111,6 +111,7 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 20px;
   }
 
   .submit-button:hover {

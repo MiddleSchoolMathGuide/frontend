@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ITopic } from "$lib/types/edu.type";
+  import { Status, type ITopic } from "$lib/types/edu.type";
   import Unit from "./Unit.svelte";
 
   export let topic: ITopic;
@@ -19,9 +19,24 @@
       /* TODO: Handle exceptions */
     });
   }
+
+  function addUnit() {
+    if (topic.units === undefined) {
+      topic.units = [];
+    }
+
+    topic.units.push({
+      title: "Untitled unit",
+      description: "Please fill out needed required fields!",
+      icon: "",
+      lessons: [],
+      status: Status.Default,
+    });
+  }
 </script>
 
 <div class="topic-container">
+  <button on:click={() => addUnit()}>Add new unit</button>
   {#each topic.units as unit}
     <Unit {unit} />
   {/each}

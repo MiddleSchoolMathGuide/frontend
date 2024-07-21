@@ -2,8 +2,7 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
 
-  export let user: string = "";
-  let options: string[] = ["", "about", "login"];
+  let options: string[] = ["", "Topics", "Problems", "Contact Us", "Other"];
   let activePage: string = "";
 
   const navigateTo = (url: string) => {
@@ -34,27 +33,26 @@
               class:active={activePage === option}
               on:click|preventDefault={() => navigateTo(option)}
             >
-              {#if option.length === 0}HOME{/if}
-              {option.toUpperCase()}
+              {#if option.length === 0}HOME
+              {:else}{option.toUpperCase()}{/if}
             </a>
           </li>
         {/each}
       </ul>
     </nav>
-    <div class="selector-bar" />
+    <div
+      class="selector-bar"
+      style="width: {options.indexOf(activePage) * 25}%;"
+    />
   </div>
-  <div class="user-info">
-    {#if user.length !== 0}
-      <p class="username">Signed in as {user}</p>
-    {:else}
-      <p class="username">Not signed in</p>
-    {/if}
+  <div class="title">
+    <p>MSMG</p>
   </div>
 </header>
 
 <style>
   header {
-    background-color: #333;
+    background-color: #fff;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
@@ -62,7 +60,7 @@
   }
 
   .logo {
-    color: #fff;
+    color: black;
   }
 
   nav ul {
@@ -77,9 +75,15 @@
   }
 
   nav ul li a,
-  .username,
   .image-link {
-    color: #fff;
+    color: #ababab;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+  }
+
+  .title {
+    color: black;
     text-decoration: none;
     font-weight: bold;
     position: relative;
@@ -92,7 +96,7 @@
     right: 0;
     bottom: -2px;
     height: 2px;
-    background-color: #ccc;
+    background-color: #fff;
   }
 
   /* No idea why this is still necessary but deleting it and the div half breaks the header*/
@@ -101,8 +105,7 @@
     bottom: 0;
     left: 0;
     height: 2px;
-    background-color: #ccc;
+    background-color: black;
     transition: width 0.3s ease;
-    width: 0;
   }
 </style>

@@ -31,9 +31,11 @@
   }
 
   .start {
+    position: relative;
+    font-size: 19px;
     width: fit-content;
     height: fit-content;
-    border: 1px solid;
+    border: 2px solid black;
     border-radius: 5px;
     margin-top: 40px;
     margin-bottom: 20px;
@@ -42,17 +44,15 @@
   }
 
   .description {
-    border-bottom: 2px solid red;
-    padding-bottom: 10px;
-    border-radius: 0 0 5px 5px;
+    width: 350px;
+    font-size: 19px;
     text-align: center;
   }
 
   .title {
-    font-size: 40px;
+    font-size: 60px;
     line-height: 1;
-    padding: 0;
-    margin-bottom: 15px;
+    margin-bottom: -55px;
   }
 
   .get-started-link {

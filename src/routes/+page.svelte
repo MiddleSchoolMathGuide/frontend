@@ -1,18 +1,14 @@
 <script>
   import Header from "./Header.svelte";
+  import Home from "./Home.svelte";
 </script>
 
 <Header />
-<div class="home-background"></div>
+<div class="home-background">
+  <Home />
+</div>
 
 <style>
-  body,
-  html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-
   .home-background {
     background-color: #f2f2f2;
     width: 100vw;
@@ -20,5 +16,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
 </style>

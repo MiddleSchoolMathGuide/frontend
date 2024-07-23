@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import Search from './Search.svelte';
+  import Search from "./Search.svelte";
 
   let options: string[] = ["", "Topics", "Problems", "Contact Us", "Other"];
   let activePage: string = "";
@@ -22,7 +22,9 @@
 
 <header>
   <div class="logo">
-    <a class="image-link" href="/">Your Logo</a>
+    <a class="image-link" href="/"
+      ><img class="logo" src="msmg-logo.png" alt="MSMG" /></a
+    >
   </div>
   <div class="nav-section">
     <nav>
@@ -52,6 +54,10 @@
 </header>
 
 <style>
+  .logo {
+    max-width: 200px;
+  }
+
   header {
     background-color: #fff;
     padding: 1rem;

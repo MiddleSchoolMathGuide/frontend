@@ -26,8 +26,10 @@
   <div class="nav-section">
     <nav>
       <ul>
-        {#each options as option}
+        {#each options as _option}
           <li>
+            <!-- SvelteKit tries to resolve the links that leads to errors. -->
+            <!--
             <a
               href="/{option}"
               class:active={activePage === option}
@@ -36,6 +38,7 @@
               {#if option.length === 0}HOME
               {:else}{option.toUpperCase()}{/if}
             </a>
+            -->
           </li>
         {/each}
       </ul>

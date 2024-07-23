@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Topic from "$lib/components/edu/editor/Topic.svelte";
-  import { Status, type ITopic } from "$lib/types/edu.type";
+  import Topic from "$lib/components/topic/editor/Topic.svelte";
+  import { Status, type ITopic } from "$lib/types/topic.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
   import { onMount } from "svelte";
 

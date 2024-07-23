@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type ILesson } from "$lib/types/edu.type";
+  import { type ILesson } from "$lib/types/topic.type";
   import { WidgetType } from "$lib/types/widgets.type";
   import SubHeader from "./widgets/SubHeader.svelte";
   import Header from "./widgets/Header.svelte";

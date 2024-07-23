@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Status, type IUnit } from "$lib/types/edu.type";
+  import { Status, type IUnit } from "$lib/types/topic.type";
   import Lesson from "./Lesson.svelte";
 
   export let unit: IUnit;

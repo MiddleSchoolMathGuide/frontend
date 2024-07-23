@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
+  import Search from './Search.svelte';
 
   let options: string[] = ["", "Topics", "Problems", "Contact Us", "Other"];
   let activePage: string = "";
@@ -46,7 +47,7 @@
     />
   </div>
   <div class="title">
-    <p>MSMG</p>
+    <Search />
   </div>
 </header>
 

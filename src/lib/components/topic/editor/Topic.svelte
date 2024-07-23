@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Status, type ITopic } from "$lib/types/edu.type";
+  import { Status, type ITopic } from "$lib/types/topic.type";
   import Unit from "./Unit.svelte";
 
   export let topic: ITopic;

@@ -5,6 +5,8 @@
 
   let options: string[] = ["", "Topics", "Problems", "Contact Us", "Other"];
   let activePage: string = "";
+  let selectorWidth: string = "0px";
+  let selectorLeft: string = "0px";
 
   const navigateTo = (url: string) => {
     goto(url);
@@ -12,8 +14,23 @@
 
   const updateActivePage = () => {
     activePage = window.location.pathname.substring(1) || "";
+    calculateSelectorPosition();
   };
 
+  function calculateSelectorPosition() {
+    const activeIndex = options.indexOf(activePage);
+    if (activeIndex !== -1) {
+      const navItems = document.querySelectorAll(".nav-section nav ul li");
+      if (navItems.length > 0) {
+        const activeItem = navItems[activeIndex];
+        const navRect = activeItem.getBoundingClientRect();
+        selectorLeft = `${navRect.left}px`;
+        selectorWidth = `${navRect.width}px`;
+      }
+    } else {
+      selectorWidth = "0px";
+    }
+  }
   onMount(() => {
     updateActivePage();
     window.addEventListener("popstate", updateActivePage);
@@ -48,7 +65,7 @@
     </nav>
     <div
       class="selector-bar"
-      style="width: {options.indexOf(activePage) * 25}%;"
+      style="width: {selectorWidth}, left: {selectorLeft}"
     />
   </div>
   <div class="title">
@@ -109,12 +126,11 @@
     background-color: #fff;
   }
 
-  /* No idea why this is still necessary but deleting it and the div half breaks the header*/
+  /* WIP */
   .selector-bar {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
+    bottom: 100%;
+    height: 20px;
     background-color: black;
     transition: width 0.3s ease;
   }

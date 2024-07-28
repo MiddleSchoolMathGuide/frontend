@@ -135,7 +135,7 @@
   <button on:click={() => addUnit()}>Add new unit</button>
   <div
     class="units-container"
-    use:dndzone={{ items: topic.units, flipDurationMs: 300 }}
+    use:dndzone={{ items: topic.units, flipDurationMs: 300, type: "topic" }}
     on:consider={handleDndConsider}
     on:finalize={handleDndFinalize}
   >

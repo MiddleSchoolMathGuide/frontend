@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { Status, type IUnit } from "$lib/types/topic.type";
+  import { Status, type ILesson, type IUnit } from "$lib/types/topic.type";
+  import { dndzone, type DndEvent } from "svelte-dnd-action";
   import Lesson from "./Lesson.svelte";
+  import { v4 as uuidv4 } from "uuid";
 
   export let unit: IUnit;
   let expanded = false;
@@ -22,8 +24,22 @@
         icon: "",
         widgets: [],
         status: Status.Default,
+        /* Assign "fake" _id */
+        _id: uuidv4(),
+        new: true,
       },
     ];
+  }
+
+  /* TODO: Figure out whether we need this or not */
+  function handleDndConsider(event: CustomEvent<DndEvent<ILesson>>) {
+    const { items } = event.detail;
+    unit.lessons = items;
+  }
+
+  function handleDndFinalize(event: CustomEvent<DndEvent<ILesson>>) {
+    const { items } = event.detail;
+    unit.lessons = items;
   }
 </script>
 
@@ -60,9 +76,20 @@
     </form>
 
     <button on:click={() => addLesson()}>Add new lesson</button>
-    {#each unit.lessons as lesson}
-      <Lesson {lesson} />
-    {/each}
+    <div
+      class="units-container"
+      use:dndzone={{
+        items: unit.lessons,
+        flipDurationMs: 300,
+        type: `lesson${unit._id}`,
+      }}
+      on:consider={handleDndConsider}
+      on:finalize={handleDndFinalize}
+    >
+      {#each unit.lessons as lesson (lesson._id)}
+        <Lesson {lesson} />
+      {/each}
+    </div>
   {/if}
 </div>
 

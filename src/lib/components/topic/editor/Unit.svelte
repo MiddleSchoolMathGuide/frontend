@@ -81,7 +81,7 @@
       use:dndzone={{
         items: unit.lessons,
         flipDurationMs: 300,
-        type: `lesson${unit._id}`,
+        type: "lesson",
       }}
       on:consider={handleDndConsider}
       on:finalize={handleDndFinalize}

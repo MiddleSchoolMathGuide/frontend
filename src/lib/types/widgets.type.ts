@@ -2,6 +2,9 @@ export type WidgetUnion = WHeader | WSubHeader;
 
 export type Widget = {
   type: WidgetType;
+  _id?: string;
+  new?: boolean;
+  index?: number;
 };
 
 export enum WidgetType {

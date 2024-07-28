@@ -1,8 +1,21 @@
 <script lang="ts">
-  import { Status, type ITopic } from "$lib/types/topic.type";
+  import {
+    Status,
+    type ILesson,
+    type ITopic,
+    type IUnit,
+  } from "$lib/types/topic.type";
+  import type { WidgetUnion } from "$lib/types/widgets.type";
   import Unit from "./Unit.svelte";
+  import {
+    dndzone,
+    type DndEvent,
+    overrideItemIdKeyNameBeforeInitialisingDndZones,
+  } from "svelte-dnd-action";
+  import { v4 as uuidv4 } from "uuid";
 
   export let topic: ITopic;
+  overrideItemIdKeyNameBeforeInitialisingDndZones("_id");
 
   export function sendTopic() {
     fetch(window.location.href, {
@@ -13,7 +26,7 @@
       },
       body: JSON.stringify({
         ok: true,
-        content: topic,
+        content: processData(processData(topic, removeId), addIndex),
       }),
     }).then((response) => {
       if (response.ok) {
@@ -28,6 +41,41 @@
     });
   }
 
+  type Processor<T> = (item: T, index: number) => T;
+
+  /* Processor that removes "fake" _id fields */
+  const removeId: Processor<IUnit | ILesson | WidgetUnion> = (obj, _) => {
+    if (obj.new === true) delete obj._id;
+    delete obj.new;
+    return obj;
+  };
+
+  /* Processor that adds indexes to each array */
+  const addIndex: Processor<IUnit | ILesson | WidgetUnion> = (item, index) => ({
+    ...item,
+    index,
+  });
+
+  /* Function to process topic data with a `Processor` */
+  const processData = (
+    topic: ITopic,
+    processor: Processor<IUnit | ILesson | WidgetUnion>
+  ): ITopic => ({
+    ...topic,
+    units: topic.units.map((unit, unitIndex) => ({
+      ...(processor(unit, unitIndex) as IUnit),
+      lessons:
+        unit.lessons?.map((lesson, lessonIndex) => ({
+          ...(processor(lesson, lessonIndex) as ILesson),
+          widgets:
+            lesson.widgets?.map(
+              (widget, widgetIndex) =>
+                processor(widget, widgetIndex) as WidgetUnion
+            ) || [],
+        })) || [],
+    })),
+  });
+
   function addUnit() {
     if (topic.units === undefined) {
       topic.units = [];
@@ -41,8 +89,22 @@
         icon: "",
         lessons: [],
         status: Status.Default,
+        /* Assign "fake" _id */
+        _id: uuidv4(),
+        new: true,
       },
     ];
+  }
+
+  /* TODO: Figure out whether we need this or not */
+  function handleDndConsider(event: CustomEvent<DndEvent<IUnit>>) {
+    const { items } = event.detail;
+    topic.units = items;
+  }
+
+  function handleDndFinalize(event: CustomEvent<DndEvent<IUnit>>) {
+    const { items } = event.detail;
+    topic.units = items;
   }
 </script>
 
@@ -71,9 +133,16 @@
   </form>
 
   <button on:click={() => addUnit()}>Add new unit</button>
-  {#each topic.units as unit}
-    <Unit {unit} />
-  {/each}
+  <div
+    class="units-container"
+    use:dndzone={{ items: topic.units, flipDurationMs: 300 }}
+    on:consider={handleDndConsider}
+    on:finalize={handleDndFinalize}
+  >
+    {#each topic.units as unit (unit._id)}
+      <Unit {unit} />
+    {/each}
+  </div>
 </div>
 
 <style>

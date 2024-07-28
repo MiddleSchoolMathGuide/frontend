@@ -6,6 +6,9 @@ export type ITopic = {
   description: string;
   status: Status;
   units: Array<IUnit>;
+  _id?: string;
+  new?: boolean;
+  index?: number;
 };
 
 export type IUnit = {
@@ -14,6 +17,9 @@ export type IUnit = {
   description: string;
   status: Status;
   lessons: Array<ILesson>;
+  _id?: string;
+  new?: boolean;
+  index?: number;
 };
 
 export type ILesson = {
@@ -22,6 +28,9 @@ export type ILesson = {
   description: string;
   status: Status;
   widgets: Array<WidgetUnion>;
+  _id?: string;
+  new?: boolean;
+  index?: number;
 };
 
 export enum Status {

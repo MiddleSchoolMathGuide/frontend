@@ -45,7 +45,7 @@
   <div class="form-control">
     <h3>Create Account</h3>
 
-    <div class="sign-in-box">
+    <div class="sign-up-box">
       <input
         class="usernm"
         type="text"
@@ -54,11 +54,11 @@
       />
     </div>
 
-    <div class="sign-in-box">
+    <div class="sign-up-box">
       <input class="name" type="text" placeholder="Name" bind:value={name} />
     </div>
 
-    <div class="sign-in-box">
+    <div class="sign-up-box">
       <input
         class="email"
         type="text"
@@ -67,7 +67,7 @@
       />
     </div>
 
-    <div class="sign-in-box">
+    <div class="sign-up-box">
       <input
         class="pswd"
         type="password"
@@ -76,7 +76,7 @@
       />
     </div>
 
-    <div class="sign-in-box">
+    <div class="sign-up-box">
       <input
         class="cpswd"
         type="password"
@@ -85,8 +85,8 @@
         on:input={() => alignPassword()}
       />
     </div>
-    <div class="sign-in-box">
-      <button class="sign-in-button" on:click={() => createAccount()}
+    <div class="sign-up-box">
+      <button class="sign-up-button" on:click={() => createAccount()}
         >Sign In</button
       >
     </div>
@@ -111,7 +111,7 @@
     margin-bottom: 20px;
   }
 
-  .sign-in-box {
+  .sign-up-box {
     margin-bottom: 15px;
   }
 
@@ -128,7 +128,7 @@
     box-sizing: border-box;
   }
 
-  .sign-in-button {
+  .sign-up-button {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -140,7 +140,7 @@
     transition: background-color 0.3s ease;
   }
 
-  .sign-in-button:hover {
+  .sign-up-button:hover {
     background-color: #0056b3;
   }
 </style>

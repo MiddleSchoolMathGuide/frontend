@@ -56,7 +56,7 @@
 </div>
 <div class="form-control">
   <button on:click={() => handleLogin()} class="login-button">Login</button>
-  <p style="font-size: 10px"><a href="../signIn">No account? Make one here</a></p>
+  <p style="font-size: 10px"><a href="/signup">No account? Make one here</a></p>
 </div>
 
 <style>

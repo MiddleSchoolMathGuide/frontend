@@ -1,12 +1,9 @@
 <script lang="ts">
-  import UserData from "$lib/components/user/UserData.svelte";
-  import type { UserAPIResponse } from "$lib/types/profile.type";
-  import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
+  import { sha256 } from "$lib/utils/crypto";
 
   let username: string = "";
   let password: string = "";
   let email: string = "";
-  let name: string = "";
   let passwordCheck: string = "";
   let canLogin: boolean = false;
 
@@ -14,86 +11,73 @@
     canLogin = password === passwordCheck;
   };
 
-  const createAccount = () => {
+  async function createAccount() {
     if (!canLogin) {
       alert("Password Inputs Do Not Match");
+      return;
     }
-    return canLogin;
-  };
 
-  function makeUser(): ResponseDataWrapper<UserAPIResponse> {
-    let val: ResponseDataWrapper<UserAPIResponse> = {
-      ok: canLogin,
-      msg: "user successfully created",
-      data: {
+    const response = await fetch("/auth/signup", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         username,
         email,
-        privilige_level: "user",
-        created_at: new Date(),
-        updated_at: new Date(),
-        profile: {
-          name,
-          bio: "Regular User",
-        },
-      },
-    };
-    return val;
+        password_hash: await sha256(password),
+      }),
+    })
+      .then((rawResponse) => rawResponse.json())
+      .then((response) => {
+        if (response && response.ok) {
+          window.location.href = "/user/me";
+        }
+      });
   }
 </script>
 
-{#if !canLogin}
-  <div class="form-control">
-    <h3>Create Account</h3>
+<div class="form-control">
+  <h3>Create Account</h3>
 
-    <div class="sign-up-box">
-      <input
-        class="usernm"
-        type="text"
-        placeholder="Username"
-        bind:value={username}
-      />
-    </div>
-
-    <div class="sign-up-box">
-      <input class="name" type="text" placeholder="Name" bind:value={name} />
-    </div>
-
-    <div class="sign-up-box">
-      <input
-        class="email"
-        type="text"
-        placeholder="E-mail"
-        bind:value={email}
-      />
-    </div>
-
-    <div class="sign-up-box">
-      <input
-        class="pswd"
-        type="password"
-        placeholder="Password"
-        bind:value={password}
-      />
-    </div>
-
-    <div class="sign-up-box">
-      <input
-        class="cpswd"
-        type="password"
-        placeholder="Confirm Password"
-        bind:value={passwordCheck}
-        on:input={() => alignPassword()}
-      />
-    </div>
-    <div class="sign-up-box">
-      <button class="sign-up-button" on:click={() => createAccount()}
-        >Sign In</button
-      >
-    </div>
+  <div class="sign-up-box">
+    <input
+      class="usernm"
+      type="text"
+      placeholder="Username"
+      bind:value={username}
+    />
   </div>
-{:else}
-  <UserData data={makeUser()} />
-{/if}
+
+  <div class="sign-up-box">
+    <input class="email" type="text" placeholder="E-mail" bind:value={email} />
+  </div>
+
+  <div class="sign-up-box">
+    <input
+      class="pswd"
+      type="password"
+      placeholder="Password"
+      bind:value={password}
+    />
+  </div>
+
+  <div class="sign-up-box">
+    <input
+      class="cpswd"
+      type="password"
+      placeholder="Confirm Password"
+      bind:value={passwordCheck}
+      on:input={() => alignPassword()}
+    />
+  </div>
+  <div class="sign-up-box">
+    <button class="sign-up-button" on:click={() => createAccount()}
+      >Sign Up</button
+    >
+  </div>
+</div>
 
 <style>
   .form-control {
@@ -118,7 +102,6 @@
   .usernm,
   .pswd,
   .cpswd,
-  .name,
   .email {
     width: 100%;
     padding: 10px;

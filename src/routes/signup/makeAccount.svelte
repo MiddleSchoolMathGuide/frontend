@@ -11,13 +11,21 @@
     canLogin = password === passwordCheck;
   };
 
+  const isMail = (email: string): boolean =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
   async function createAccount() {
     if (!canLogin) {
       alert("Password Inputs Do Not Match");
       return;
     }
 
-    const response = await fetch("/auth/signup", {
+    if (!isMail(email)) {
+      alert("Invalid email!");
+      return;
+    }
+
+    await fetch("/auth/signup", {
       method: "POST",
       headers: {
         Accept: "application/json",

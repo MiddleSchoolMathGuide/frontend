@@ -9,6 +9,7 @@ export enum WidgetType {
   SubHeader = "SubHeader",
   Button = "Button",
   LessonBar = "LessonBar",
+  TableOfContents = "TableOfContents",
 }
 
 export type WHeader = {
@@ -31,3 +32,7 @@ export type WLessonBar = {
   stateButtons: WButton[];
   activeIndex: number;
 } & Widget
+
+export type WTableContents = {
+  options: WButton[];
+}

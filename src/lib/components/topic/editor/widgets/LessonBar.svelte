@@ -57,7 +57,8 @@
 
   .state-buttons {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center; 
     width: 100%;
     margin-top: 10px;
   }
@@ -70,5 +71,7 @@
     border: 1px solid transparent;
     border-radius: 5px;
     cursor: pointer;
+    width: 80%;
+    margin: 5px 0;
   }
 </style>

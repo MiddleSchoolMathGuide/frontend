@@ -5,6 +5,7 @@
   const lessons: { title: string; link: string }[] = [
     { title: "One Variable Linear Equations", link: "/linear-equations" },
     { title: "Pythagorean Theorem", link: "/pytheorem" },
+    { title: "Polynomials", link: "/polynomials" },
   ];
 
   let lessonsSearchedFor: { title: string; link: string }[] = [];
@@ -88,5 +89,10 @@
   .lesson-clickable {
     color: black;
     text-decoration: none;
+  }
+
+  .lesson-result {
+    max-height: 139px;
+    overflow-y: auto;
   }
 </style>

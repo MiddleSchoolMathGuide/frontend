@@ -1,21 +1,25 @@
-<a href="/login">Login</a>
+<script>
+  import Header from "./Header.svelte";
+  import Home from "./Home.svelte";
+</script>
+
+<Header />
+<div class="home-background">
+  <Home />
+</div>
 
 <style>
-  :global(*) {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  }
-
-  :global(button) {
-    padding: 0.4em;
-    margin: 0 0 0.5em 0;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  :global(button:hover) {
-    background-color: #999 !important;
+  .home-background {
+    background-color: #f2f2f2;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
 </style>

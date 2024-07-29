@@ -1,5 +1,6 @@
 <script lang="ts">
   import UserData from "$lib/components/user/UserData.svelte";
+  import { goto } from '$app/navigation';
   import type { UserAPIResponse } from "$lib/types/profile.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
 
@@ -8,17 +9,58 @@
   let email: string = "";
   let name: string = "";
   let passwordCheck: string = "";
+  let errorMessage: string = "";
+  let successMessage: string = "";
   let canLogin: boolean = false;
+
+  //For now, verifying that the email is a gmail, to be expanded in the future with actual verification if necessary
+  const isGmail = (email: string): boolean => {
+    const gmailPattern = /^[a-zA-z0-9.+%+-]+@gmail\.com$/;
+    return gmailPattern.test(email);
+  }
 
   const alignPassword = () => {
     canLogin = password === passwordCheck;
   };
 
-  const createAccount = () => {
+  const createAccount = async () => {
     if (!canLogin) {
-      alert("Password Inputs Do Not Match");
+      errorMessage = "Password inputs do not match.";
+      return;
     }
-    return canLogin;
+
+    if (!isGmail(email)) {
+      errorMessage = "Please use a Gmail address.";
+      return;
+    }
+
+    try {
+      const response = await fetch('/user/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          name,
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (response.ok) {
+        successMessage = "Account created successfully. Redirecting...";
+        setTimeout(() => {
+          goto('/login');
+        }, 2000);
+      } else {
+        errorMessage = result.message || 'An error occurred. Please try again.';
+      }
+    } catch (error) {
+      errorMessage = 'Network error. Please try again later.';
+    }
   };
 
   function makeUser(): ResponseDataWrapper<UserAPIResponse> {

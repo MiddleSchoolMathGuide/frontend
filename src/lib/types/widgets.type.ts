@@ -14,6 +14,7 @@ export enum WidgetType {
   LessonBar = "LessonBar",
   TableOfContents = "TableOfContents",
   ProgressBar = "ProgressBar",
+  Credits = "Credits",
 }
 
 export type WHeader = {
@@ -43,4 +44,11 @@ export type WTableContents = {
 
 export type WProgressBar = {
   fill: number;
+} & Widget;
+
+export type WCredits = {
+  problemNames: string[];
+  contentNames: string[];
+  artNames: string[];
+  programmingNames: string[];
 } & Widget;

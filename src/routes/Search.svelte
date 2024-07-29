@@ -1,24 +1,48 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
   let currentInput: string = "";
 
   //Likely replace later with full lessons from ts file
-  const lessons: { title: string; link: string }[] = [
-    { title: "One Variable Linear Equations", link: "/linear-equations" },
-    { title: "Pythagorean Theorem", link: "/pytheorem" },
-    { title: "Polynomials", link: "/polynomials" },
-  ];
+  let lessons: { title: string; link: string, tags: string[] }[] = [];
 
-  let lessonsSearchedFor: { title: string; link: string }[] = [];
+  let lessonsSearchedFor: { title: string; link: string, tags: string[] }[] = [];
+  
 
-  const updateSearch = () => {
-    if (currentInput.trim() === "") {
-      lessonsSearchedFor = [];
-    } else {
-      lessonsSearchedFor = lessons.filter((lesson) =>
-        lesson.title.toLowerCase().includes(currentInput.toLowerCase())
-      );
+  //To be changed if necessary for API
+   const fetchLessons = async () => {
+    try {
+      const response = await fetch('/topics/units/lessons');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      lessons = data;
+      updateSearch(); 
+    } catch (error) {
+      console.error('Failed to fetch lessons:', error);
     }
   };
+
+  const updateSearch = () => {
+    const lowerCaseInput = currentInput.trim().toLowerCase();
+
+    if (lowerCaseInput === "") {
+      lessonsSearchedFor = [];
+    } else {
+      lessonsSearchedFor = lessons.filter((lesson) => {
+        // Check if the lesson title includes the search input
+        const titleMatch = lesson.title.toLowerCase().includes(lowerCaseInput);
+        // Check if any of the tags include the search input
+        const tagsMatch = lesson.tags.some(tag => tag.toLowerCase().includes(lowerCaseInput));
+        return titleMatch || tagsMatch;
+      });
+    }
+  };
+
+  onMount(() => {
+    fetchLessons();
+  });
 </script>
 
 <div class="search-box">

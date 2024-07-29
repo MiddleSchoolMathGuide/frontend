@@ -1,47 +1,71 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
   import Search from "./Search.svelte";
 
   let options: string[] = ["", "Topics", "Problems", "Contact Us", "Other"];
-  let activePage: string = "";
   let selectorWidth: string = "0px";
   let selectorLeft: string = "0px";
+  let focusedElement: HTMLElement | null = null;
 
   const navigateTo = (url: string) => {
     goto(url);
   };
 
-  const updateActivePage = () => {
-    activePage = window.location.pathname.substring(1) || "";
-    calculateSelectorPosition();
-  };
+  function updateSelectorPosition(element: HTMLElement) {
+    const navItemRect = element.getBoundingClientRect();
+    const navContainerRect = document
+      .querySelector(".nav-section nav ul")!
+      .getBoundingClientRect();
 
-  function calculateSelectorPosition() {
-    const activeIndex = options.indexOf(activePage);
-    if (activeIndex !== -1) {
-      const navItems = document.querySelectorAll(".nav-section nav ul li");
-      if (navItems.length > 0) {
-        const activeItem = navItems[activeIndex];
-        const navRect = activeItem.getBoundingClientRect();
-        selectorLeft = `${navRect.left}px`;
-        selectorWidth = `${navRect.width}px`;
-      }
+    //Manual adjustment for now
+    const leftOffset = navItemRect.left - navContainerRect.left + 512;
+    const navContainerPaddingLeft = parseFloat(
+      getComputedStyle(document.querySelector(".nav-section nav ul")!)
+        .paddingLeft
+    );
+    const navContainerBorderLeft = parseFloat(
+      getComputedStyle(document.querySelector(".nav-section nav ul")!)
+        .borderLeftWidth
+    );
+
+    selectorLeft = `${leftOffset + navContainerPaddingLeft + navContainerBorderLeft}px`;
+    selectorWidth = `${navItemRect.width}px`;
+  }
+
+  function handleMouseOver(event: MouseEvent) {
+    const target = event.currentTarget as HTMLElement;
+    updateSelectorPosition(target);
+  }
+
+  function handleFocus(event: FocusEvent) {
+    const target = event.currentTarget as HTMLElement;
+    focusedElement = target;
+    updateSelectorPosition(target);
+  }
+
+  function handleMouseLeave() {
+    if (focusedElement) {
+      updateSelectorPosition(focusedElement);
     } else {
       selectorWidth = "0px";
     }
   }
-  onMount(() => {
-    updateActivePage();
-    window.addEventListener("popstate", updateActivePage);
-  });
+
+  function handleBlur() {
+    //Reset selector-bar when focus is lost
+    if (focusedElement) {
+      updateSelectorPosition(focusedElement);
+    } else {
+      selectorWidth = "0px";
+    }
+  }
 </script>
 
 <header>
   <div class="logo">
-    <a class="image-link" href="/"
-      ><img class="logo" src="msmg-logo.png" alt="MSMG" /></a
-    >
+    <a class="image-link" href="/">
+      <img class="logo" src="msmg-logo.png" alt="MSMG" />
+    </a>
   </div>
   <div class="nav-section">
     <nav>
@@ -50,8 +74,12 @@
           <li>
             <a
               href="/{option}"
-              class:active={activePage === option}
               on:click|preventDefault={() => navigateTo(option)}
+              on:mouseover={handleMouseOver}
+              on:focus={handleFocus}
+              on:blur={handleBlur}
+              on:mouseleave={handleMouseLeave}
+              tabindex="0"
             >
               {#if option.length === 0}HOME
               {:else}{option.toUpperCase()}{/if}
@@ -62,7 +90,7 @@
     </nav>
     <div
       class="selector-bar"
-      style="width: {selectorWidth}, left: {selectorLeft}"
+      style="width: {selectorWidth}; left: {selectorLeft};"
     />
   </div>
   <div class="title">
@@ -83,37 +111,42 @@
     align-items: center;
   }
 
-  .logo {
-    color: black;
+  .logo img {
+    max-width: 100%;
   }
 
-  nav ul {
+  .nav-section {
+    position: relative;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-section nav ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
+    position: relative;
+    padding-bottom: 10px;
   }
 
-  nav ul li {
+  .nav-section nav ul li {
     margin-right: 1rem;
+    position: relative;
   }
 
-  nav ul li a,
-  .image-link {
+  .nav-section nav ul li a {
     color: #ababab;
     text-decoration: none;
     font-weight: bold;
     position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
   }
 
-  .title {
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    position: relative;
-  }
-
-  nav ul li a:hover::after {
+  .nav-section nav ul li a:hover::after,
+  .nav-section nav ul li a:focus::after {
     content: "";
     position: absolute;
     left: 0;
@@ -123,12 +156,21 @@
     background-color: #fff;
   }
 
-  /* WIP */
+  .title {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
   .selector-bar {
     position: absolute;
-    bottom: 100%;
-    height: 20px;
-    background-color: black;
-    transition: width 0.3s ease;
+    bottom: 0;
+    height: 2px;
+    background-color: #ababab;
+    transition:
+      width 0.3s ease,
+      left 0.3s ease;
+    width: 0;
+    left: 0;
   }
 </style>

@@ -4,4 +4,4 @@
   export let widget: WSubHeader;
 </script>
 
-<h1>{widget.text}</h1>
+<h2>{widget.text}</h2>

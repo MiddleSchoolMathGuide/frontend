@@ -1,32 +1,30 @@
 <script lang="ts">
-  import type {
-    WLessonBar,
-    WHeader,
-    WSubHeader,
-    WButton,
-  } from "$lib/types/widgets.type";
-  export let widget: WLessonBar;
+  import type { LessonButton } from "$lib/types/lesson.type";
 
-  const { header, unitHeader, stateButtons, activeIndex } = widget;
+  let activeIndex = 0;
+
+  let topic_header: string;
+  let unit_header: string;
+  let lessons: LessonButton[];
 </script>
 
 <div class="lesson-bar-container">
   <div class="lesson-bar">
-    <h1>{header.text}</h1>
-    <h2><strong>{unitHeader.text}</strong></h2>
+    <h1>{topic_header}</h1>
+    <h2><strong>{unit_header}</strong></h2>
 
     <div class="state-buttons">
-      {#each stateButtons as button, index}
+      {#each lessons as button, index}
         <div
           class="state-button"
-          style="border-color: {button.borderColor}; 
-                    width: calc(80% / {stateButtons.length}); 
+          style="border-color: red; 
+                    width: 100%; 
                     background-color: {index === activeIndex
             ? '#ffcccc'
             : 'transparent'}; 
                     color: {index === activeIndex ? 'red' : 'inherit'};"
         >
-          {button.text}
+          {button.title}
         </div>
       {/each}
     </div>
@@ -58,7 +56,7 @@
   .state-buttons {
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     width: 100%;
     margin-top: 10px;
   }

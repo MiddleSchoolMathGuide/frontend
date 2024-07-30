@@ -1,9 +1,4 @@
 <script lang="ts">
-  import type { WProgressBar } from "$lib/types/widgets.type";
-  export let widget: WProgressBar;
-
-  const { fill } = widget;
-
   const handleOverfill = (percentFill: number) => {
     while (percentFill > 100) {
       percentFill = 100;
@@ -12,7 +7,7 @@
   };
 
   const barWidth = 748;
-  const fillWidth = (handleOverfill(fill) / 100) * barWidth;
+  const fillWidth = (handleOverfill(0) / 100) * barWidth;
 </script>
 
 <div class="prog-bar">

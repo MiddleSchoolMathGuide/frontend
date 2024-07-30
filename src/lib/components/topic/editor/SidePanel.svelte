@@ -5,6 +5,7 @@
 
   const allWidgets: WidgetUnion[] = [
     { text: "", type: WidgetType.Header, _id: uuidv4(), new: true },
+    { text: "", type: WidgetType.SubHeader, _id: uuidv4(), new: true },
   ];
 
   let widgets = structuredClone(allWidgets);

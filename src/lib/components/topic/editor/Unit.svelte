@@ -77,7 +77,7 @@
 
     <button on:click={() => addLesson()}>Add new lesson</button>
     <div
-      class="units-container"
+      class="lesson-container"
       use:dndzone={{
         items: unit.lessons,
         flipDurationMs: 300,

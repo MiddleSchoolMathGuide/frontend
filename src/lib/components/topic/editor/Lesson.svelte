@@ -2,8 +2,8 @@
   import { type ILesson } from "$lib/types/topic.type";
   import { WidgetType, type WidgetUnion } from "$lib/types/widgets.type";
   import { dndzone, type DndEvent } from "svelte-dnd-action";
-  import Header from "./widgets/Header.svelte";
-  import SubHeader from "./widgets/SubHeader.svelte";
+  import Header from "./widgets/EHeader.svelte";
+  import SubHeader from "./widgets/ESubHeader.svelte";
 
   export let lesson: ILesson;
   let expanded = false;

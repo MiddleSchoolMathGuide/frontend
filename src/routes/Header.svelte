@@ -64,8 +64,7 @@
 <header>
   <div class="logo">
     <a class="image-link" href="/">
-      <!-- "msmg-logo.png" cannot be found. Build fails -->
-      <!--<img class="logo" src="msmg-logo.png" alt="MSMG" />-->
+      <img class="logo" src="msmg-logo.png" alt="MSMG" />
     </a>
   </div>
   <div class="nav-section">

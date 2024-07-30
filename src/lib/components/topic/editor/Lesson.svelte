@@ -1,14 +1,26 @@
 <script lang="ts">
   import { type ILesson } from "$lib/types/topic.type";
-  import { WidgetType } from "$lib/types/widgets.type";
-  import SubHeader from "./widgets/SubHeader.svelte";
+  import { WidgetType, type WidgetUnion } from "$lib/types/widgets.type";
+  import { dndzone, type DndEvent } from "svelte-dnd-action";
   import Header from "./widgets/Header.svelte";
+  import SubHeader from "./widgets/SubHeader.svelte";
 
   export let lesson: ILesson;
   let expanded = false;
 
   function toggleExpand() {
     expanded = !expanded;
+  }
+
+  /* TODO: Figure out whether we need this or not */
+  function handleDndConsider(event: CustomEvent<DndEvent<WidgetUnion>>) {
+    const { items } = event.detail;
+    lesson.widgets = items;
+  }
+
+  function handleDndFinalize(event: CustomEvent<DndEvent<WidgetUnion>>) {
+    const { items } = event.detail;
+    lesson.widgets = items;
   }
 </script>
 
@@ -49,13 +61,24 @@
       />
     </form>
 
-    {#each lesson.widgets as widget}
-      {#if widget.type === WidgetType.Header}
-        <Header {widget} />
-      {:else if widget.type === WidgetType.SubHeader}
-        <SubHeader {widget} />
-      {/if}
-    {/each}
+    <div
+      class="widget-container"
+      use:dndzone={{
+        items: lesson.widgets,
+        flipDurationMs: 300,
+        type: "widget",
+      }}
+      on:consider={handleDndConsider}
+      on:finalize={handleDndFinalize}
+    >
+      {#each lesson.widgets as widget (widget._id)}
+        {#if widget.type === WidgetType.Header}
+          <Header {widget} />
+        {:else if widget.type === WidgetType.SubHeader}
+          <SubHeader {widget} />
+        {/if}
+      {/each}
+    </div>
   {/if}
 </div>
 
@@ -91,5 +114,15 @@
   input:focus {
     border-color: #007bff;
     outline: none;
+  }
+
+  .widget-container {
+    width: 100%;
+    min-height: 40px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    overflow: auto;
   }
 </style>

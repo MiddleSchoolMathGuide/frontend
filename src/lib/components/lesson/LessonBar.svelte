@@ -3,9 +3,11 @@
 
   let activeIndex = 0;
 
-  let topic_header: string;
-  let unit_header: string;
-  let lessons: LessonButton[];
+  export let topic_header: string = "";
+  export let unit_header: string = "";
+  export let lessons: LessonButton[] = [
+    { title: "", link: new URL("about:blank") },
+  ];
 </script>
 
 <div class="lesson-bar-container">

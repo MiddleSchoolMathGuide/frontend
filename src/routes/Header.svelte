@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import Search from "./Search.svelte";
 
-  let options: string[] = ["", "Topics", "Problems", "Contact Us", "Other"];
+  let options: string[] = ["lesson"];
   let selectorWidth: string = "0px";
   let selectorLeft: string = "0px";
   let focusedElement: HTMLElement | null = null;
@@ -73,18 +73,18 @@
         {#each options as _option}
           <li>
             <!-- SvelteKit tries to resolve the links that leads to errors. -->
-            <!--
-            <a
-              href="/{option}"
-              on:click|preventDefault={() => navigateTo(option)}
+            
+            <!-- <a
+              href="/{_option}"
+              on:click|preventDefault={() => navigateTo(_option)}
               on:mouseover={handleMouseOver}
               on:focus={handleFocus}
               on:blur={handleBlur}
               on:mouseleave={handleMouseLeave}
               tabindex="0"
             >
-              {#if option.length === 0}HOME
-              {:else}{option.toUpperCase()}{/if}
+              {#if _option.length === 0}HOME
+              {:else}{_option.toUpperCase()}{/if}
             </a>
             -->
           </li>

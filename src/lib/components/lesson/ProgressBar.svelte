@@ -1,4 +1,6 @@
 <script lang="ts">
+  export let docHeight:number;
+
   const handleOverfill = (percentFill: number) => {
     while (percentFill > 100) {
       percentFill = 100;
@@ -7,7 +9,7 @@
   };
 
   const barWidth = 748;
-  const fillWidth = (handleOverfill(0) / 100) * barWidth;
+  const fillWidth = (handleOverfill(docHeight) / 100) * barWidth;
 </script>
 
 <div class="prog-bar">

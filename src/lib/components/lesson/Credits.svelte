@@ -1,8 +1,10 @@
 <script lang="ts">
-  import type { WCredits, WButton } from "$lib/types/widgets.type";
-  export let widget: WCredits;
-
-  const { problemNames, contentNames, artNames, programmingNames } = widget;
+  export let names: {
+    problemNames: string[];
+    contentNames: string[];
+    artNames: string[];
+    programmingNames: string[];
+  };
 
   const formatNames = (names: string[]): string => {
     let nameList: string = "";
@@ -19,16 +21,16 @@
   </div>
   <div class="names">
     <div>
-      <p class="credit-text">{formatNames(problemNames)}</p>
+      <p class="credit-text">{formatNames(names.problemNames)}</p>
     </div>
     <div>
-      <p class="credit-text">{formatNames(contentNames)}</p>
+      <p class="credit-text">{formatNames(names.contentNames)}</p>
     </div>
     <div>
-      <p class="credit-text">{formatNames(artNames)}</p>
+      <p class="credit-text">{formatNames(names.artNames)}</p>
     </div>
     <div>
-      <p class="credit-text">{formatNames(programmingNames)}</p>
+      <p class="credit-text">{formatNames(names.programmingNames)}</p>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SidePanel from "$lib/components/topic/editor/SidePanel.svelte";
   import Topic from "$lib/components/topic/editor/Topic.svelte";
   import { Status, type ITopic } from "$lib/types/topic.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
@@ -20,7 +21,6 @@
         return;
       }
 
-      /* TODO: Handle parsing error */
       let rdw: ResponseDataWrapper<ITopic> = JSON.parse(dataMessage);
       if (!rdw.ok || rdw.data === null) {
         console.error(rdw.msg);
@@ -32,4 +32,23 @@
   });
 </script>
 
-<Topic {topic} />
+<div class="main-container">
+  <div class="content">
+    <Topic {topic} />
+  </div>
+  <SidePanel />
+</div>
+
+<style>
+  .main-container {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+
+  .content {
+    flex: 1;
+    padding-right: 20px;
+  }
+</style>

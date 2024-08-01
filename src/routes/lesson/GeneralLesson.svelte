@@ -69,7 +69,8 @@
 
   .right-materials {
     flex: 1;
-    padding: 10px;
+    max-width: 25%;
+    padding: 11px;
     background-color: #f9f9f9;
   }
 

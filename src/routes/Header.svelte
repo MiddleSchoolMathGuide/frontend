@@ -74,7 +74,7 @@
           <li>
             <!-- SvelteKit tries to resolve the links that leads to errors. -->
             
-            <!-- <a
+            <a
               href="/{_option}"
               on:click|preventDefault={() => navigateTo(_option)}
               on:mouseover={handleMouseOver}
@@ -86,7 +86,7 @@
               {#if _option.length === 0}HOME
               {:else}{_option.toUpperCase()}{/if}
             </a>
-            -->
+           
           </li>
         {/each}
       </ul>

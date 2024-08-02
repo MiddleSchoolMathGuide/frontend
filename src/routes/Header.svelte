@@ -73,7 +73,7 @@
         {#each options as _option}
           <li>
             <!-- SvelteKit tries to resolve the links that leads to errors. -->
-            
+
             <a
               href="/{_option}"
               on:click|preventDefault={() => navigateTo(_option)}
@@ -86,7 +86,6 @@
               {#if _option.length === 0}HOME
               {:else}{_option.toUpperCase()}{/if}
             </a>
-           
           </li>
         {/each}
       </ul>

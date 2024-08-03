@@ -5,6 +5,26 @@
   import TableOfContents from "$lib/components/lesson/TableOfContents.svelte";
   import { onMount } from "svelte";
 
+  interface LessonContent {
+    contents: string[];
+  }
+
+  interface Lesson {
+    problemName?: string;
+    contentName?: string;
+    artName?: string;
+    programmingName?: string;
+  }
+
+  interface UnitContextResponse {
+    ok: boolean;
+    msg: string;
+    data: {
+      units: any[];
+      lessons: Lesson[];
+    };
+  }
+
   export let names: {
     problemNames: string[];
     contentNames: string[];
@@ -19,11 +39,71 @@
 
   export let contents: string[] = [""];
 
+  export let path: {
+    lessonName: string;
+    topic: string;
+    unit: string;
+  } = {
+    lessonName: "",
+    topic: "",
+    unit: "",
+  }
+
+  let {lessonName, topic, unit} = path;
+
   let docHeight: number = 0;
 
   onMount(() => {
     docHeight = document.documentElement.scrollHeight;
+    //Change if onMount will not work
+    fetchLessonContent();
+    fetchNames(); 
   });
+
+  const fetchLessonContent = async () => {
+    try {
+      const response = await fetch(`/api/t/${topic}/${unit}/${lessonName}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error fetching lesson content: ${response.statusText}`);
+      }
+
+      const data: LessonContent = await response.json();
+      contents = data.contents || [];
+    } catch (error) {
+      console.error("Failed to fetch lesson content:", error);
+    }
+  };
+
+  const fetchNames = async () => {
+    try {
+      const response = await fetch(`/api/unit_context/${topic}/${unit}`, {
+        method: "GET",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error fetching names: ${response.statusText}`);
+      }
+
+      const data: UnitContextResponse = await response.json();
+
+      if (data.ok && data.data) {
+        const { lessons } = data.data;
+        names = {
+          problemNames: lessons.map(lesson => lesson.problemName || ""),
+          contentNames: lessons.map(lesson => lesson.contentName || ""),
+          artNames: lessons.map(lesson => lesson.artName || ""),
+          programmingNames: lessons.map(lesson => lesson.programmingName || ""),
+        };
+      } else {
+        console.warn("No data received from the names API.");
+      }
+    } catch (error) {
+      console.error("Failed to fetch names:", error);
+    }
+  };
 </script>
 
 <div class="lesson-container">
@@ -31,7 +111,9 @@
     <LessonBar />
   </div>
   <!-- Central Div for Widgets -->
-  <div class="central-widgets"></div>
+  <div class="central-widgets">
+
+  </div>
 
   <div class="right-materials">
     <div class="credits">

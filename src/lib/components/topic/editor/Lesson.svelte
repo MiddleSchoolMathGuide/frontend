@@ -59,6 +59,23 @@
         placeholder="Status"
         required
       />
+
+      <label for="credit_content">Content credit</label>
+      <input
+        id="credit_content"
+        bind:value={lesson.credits.content}
+        placeholder="Content credits"
+        required
+      />
+
+      <label for="credit_art">Art credit</label>
+      <input
+        id="credit_art"
+        bind:value={lesson.credits.art}
+        placeholder="Art credits"
+        required
+      />
+      
     </form>
 
     <div

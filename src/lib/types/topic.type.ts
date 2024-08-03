@@ -28,6 +28,10 @@ export type ILesson = {
   description: string;
   status: Status;
   widgets: Array<WidgetUnion>;
+  credits: {
+    art: string;
+    content: string;
+  };
   _id?: string;
   new?: boolean;
   index?: number;

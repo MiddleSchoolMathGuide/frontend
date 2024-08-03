@@ -24,6 +24,10 @@
         icon: "",
         widgets: [],
         status: Status.Default,
+        credits: {
+          art: "",
+          content: "",
+        },
         /* Assign "fake" _id */
         _id: uuidv4(),
         new: true,

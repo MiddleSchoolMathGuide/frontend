@@ -75,7 +75,17 @@
         placeholder="Art credits"
         required
       />
-      
+
+      <label for="numberInput">Select difficulty (0-5):</label>
+      <input
+        id="numberInput"
+        type="number"
+        min="0"
+        max="5"
+        step="1"
+        placeholder="0"
+        bind:value={lesson.difficulty}
+      />
     </form>
 
     <div

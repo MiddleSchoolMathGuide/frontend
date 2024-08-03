@@ -26,6 +26,7 @@ export type ILesson = {
   title: string;
   icon: string;
   description: string;
+  difficulty: number;
   status: Status;
   widgets: Array<WidgetUnion>;
   credits: {

@@ -1,14 +1,14 @@
 <script lang="ts">
-  export let flavorText: string = "Easy";
+  export let flavorText: string = "Basic";
   export let level: number = 0;
 
   //Colors correspond to level
   const difficulties: string[] = [
-    "#2ae509",
-    "#e5db09",
-    "#e58409",
-    "#e53609",
-    "#e50909",
+    "#4c9440",
+    "#c0c243",
+    "#d07000",
+    "#d03e00",
+    "#e40c0c",
   ];
 
   const retrieveColor = (index: number): string => {

@@ -3,27 +3,10 @@
   import LessonBar from "$lib/components/lesson/LessonBar.svelte";
   import ProgressBar from "$lib/components/lesson/ProgressBar.svelte";
   import TableOfContents from "$lib/components/lesson/TableOfContents.svelte";
+  import type { ILesson } from "$lib/types/topic.type";
+  import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
+  import { WidgetType, type WidgetUnion } from "$lib/types/widgets.type";
   import { onMount } from "svelte";
-
-  interface LessonContent {
-    contents: string[];
-  }
-
-  interface Lesson {
-    problemName?: string;
-    contentName?: string;
-    artName?: string;
-    programmingName?: string;
-  }
-
-  interface UnitContextResponse {
-    ok: boolean;
-    msg: string;
-    data: {
-      units: any[];
-      lessons: Lesson[];
-    };
-  }
 
   export let names: {
     problemNames: string[];
@@ -57,7 +40,6 @@
     docHeight = document.documentElement.scrollHeight;
     //Change if onMount will not work
     fetchLessonContent();
-    fetchNames(); 
   });
 
   const fetchLessonContent = async () => {
@@ -70,38 +52,25 @@
         throw new Error(`Error fetching lesson content: ${response.statusText}`);
       }
 
-      const data: LessonContent = await response.json();
-      contents = data.contents || [];
-    } catch (error) {
-      console.error("Failed to fetch lesson content:", error);
-    }
-  };
+      const data: ResponseDataWrapper<ILesson> = await response.json();
+      const lesson = data.data;
 
-  const fetchNames = async () => {
-    try {
-      const response = await fetch(`/api/unit_context/${topic}/${unit}`, {
-        method: "GET",
+      contents = lesson.widgets.map(widget => {
+        if (widget.type === WidgetType.Header || widget.type === WidgetType.SubHeader) {
+          return (widget as { text: string }).text;
+        }
+        //Fallback for other widget type
+        return "";
       });
 
-      if (!response.ok) {
-        throw new Error(`Error fetching names: ${response.statusText}`);
-      }
-
-      const data: UnitContextResponse = await response.json();
-
-      if (data.ok && data.data) {
-        const { lessons } = data.data;
-        names = {
-          problemNames: lessons.map(lesson => lesson.problemName || ""),
-          contentNames: lessons.map(lesson => lesson.contentName || ""),
-          artNames: lessons.map(lesson => lesson.artName || ""),
-          programmingNames: lessons.map(lesson => lesson.programmingName || ""),
-        };
-      } else {
-        console.warn("No data received from the names API.");
-      }
+      names = {
+        problemNames: [],
+        contentNames: [lesson.credits.content],
+        artNames: [lesson.credits.art],
+        programmingNames: [],
+      };
     } catch (error) {
-      console.error("Failed to fetch names:", error);
+      console.error("Failed to fetch lesson content:", error);
     }
   };
 </script>

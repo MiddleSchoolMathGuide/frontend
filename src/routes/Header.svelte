@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import Loading from "$lib/components/lesson/Loading.svelte";
   import Search from "./Search.svelte";
 
   let options: string[] = ["lesson"];

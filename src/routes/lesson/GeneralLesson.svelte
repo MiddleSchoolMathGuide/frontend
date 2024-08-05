@@ -6,6 +6,7 @@
   import type { ILesson } from "$lib/types/topic.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
   import { WidgetType, type WidgetUnion } from "$lib/types/widgets.type";
+  import Loading from '$lib/components/lesson/Loading.svelte';
   import { onMount } from "svelte";
 
   export let names: {
@@ -31,6 +32,8 @@
     topic: "",
     unit: "",
   }
+
+  let isResponse:boolean = true;
 
   let {lessonName, topic, unit} = path;
 
@@ -71,31 +74,37 @@
       };
     } catch (error) {
       console.error("Failed to fetch lesson content:", error);
+    } finally {
+      isResponse = false;
     }
   };
 </script>
 
-<div class="lesson-container">
-  <div class="left-materials">
-    <LessonBar />
-  </div>
-  <!-- Central Div for Widgets -->
-  <div class="central-widgets">
+{#if isResponse}
+  <Loading />
+{:else}
+  <div class="lesson-container">
+    <div class="left-materials">
+      <LessonBar />
+    </div>
+    <!-- Central Div for Widgets -->
+    <div class="central-widgets">
 
-  </div>
+    </div>
 
-  <div class="right-materials">
-    <div class="credits">
-      <Credits {names} />
-    </div>
-    <div class="table-of-contents">
-      <TableOfContents {contents} />
-    </div>
-    <div class="progress-bar">
-      <ProgressBar docHeight={docHeight} />
+    <div class="right-materials">
+      <div class="credits">
+        <Credits {names} />
+      </div>
+      <div class="table-of-contents">
+        <TableOfContents {contents} />
+      </div>
+      <div class="progress-bar">
+        <ProgressBar docHeight={docHeight} />
+      </div>
     </div>
   </div>
-</div>
+{/if}
 
 <style>
   .lesson-container {

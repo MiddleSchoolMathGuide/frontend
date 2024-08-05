@@ -16,15 +16,15 @@
   .dual-ring:after {
     content: " ";
     display: block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
     border-radius: 50%;
-    border: 6.4px solid currentColor;
+    border: 10px solid currentColor;
     border-color: currentColor transparent currentColor transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
+    animation: dual-ring 1.2s linear infinite;
   }
-  @keyframes lds-dual-ring {
+  @keyframes dual-ring {
     0% {
       transform: rotate(0deg);
     }

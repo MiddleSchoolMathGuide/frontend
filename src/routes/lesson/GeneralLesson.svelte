@@ -6,7 +6,7 @@
   import type { ILesson } from "$lib/types/topic.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
   import { WidgetType, type WidgetUnion } from "$lib/types/widgets.type";
-  import Loading from '$lib/components/lesson/Loading.svelte';
+  import Loading from "$lib/components/lesson/Loading.svelte";
   import { onMount } from "svelte";
 
   export let names: {
@@ -31,11 +31,11 @@
     lessonName: "",
     topic: "",
     unit: "",
-  }
+  };
 
-  let isResponse:boolean = true;
+  let isResponse: boolean = true;
 
-  let {lessonName, topic, unit} = path;
+  let { lessonName, topic, unit } = path;
 
   let docHeight: number = 0;
 
@@ -52,19 +52,25 @@
       });
 
       if (!response.ok) {
-        throw new Error(`Error fetching lesson content: ${response.statusText}`);
+        throw new Error(
+          `Error fetching lesson content: ${response.statusText}`
+        );
       }
 
       const data: ResponseDataWrapper<ILesson> = await response.json();
       const lesson = data.data;
 
-      contents = lesson.widgets.map(widget => {
-        if (widget.type === WidgetType.Header || widget.type === WidgetType.SubHeader) {
+      contents = lesson.widgets.map((widget) => {
+        if (
+          widget.type === WidgetType.Header ||
+          widget.type === WidgetType.SubHeader
+        ) {
           return (widget as { text: string }).text;
         }
         //Fallback for other widget type
         return "";
-      });
+        //Empty space filter
+      }).filter(text => text !== "");
 
       names = {
         problemNames: [],
@@ -88,9 +94,7 @@
       <LessonBar />
     </div>
     <!-- Central Div for Widgets -->
-    <div class="central-widgets">
-
-    </div>
+    <div class="central-widgets"></div>
 
     <div class="right-materials">
       <div class="credits">
@@ -100,7 +104,7 @@
         <TableOfContents {contents} />
       </div>
       <div class="progress-bar">
-        <ProgressBar docHeight={docHeight} />
+        <ProgressBar {docHeight} />
       </div>
     </div>
   </div>

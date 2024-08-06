@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div class="dual-ring"></div>
+<div class="dual-ring">M</div>
 
 <style>
   .dual-ring,

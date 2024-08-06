@@ -61,6 +61,7 @@
       />
     </form>
 
+    <p class="explain-widgets">Drag and Drop Widgets Below</p>
     <div
       class="widget-container"
       use:dndzone={{
@@ -71,6 +72,7 @@
       on:consider={handleDndConsider}
       on:finalize={handleDndFinalize}
     >
+      
       {#each lesson.widgets as widget (widget._id)}
         {#if widget.type === WidgetType.Header}
           <Header {widget} />
@@ -96,7 +98,8 @@
     margin-top: 20px;
   }
 
-  label {
+  label,
+  .explain-widgets {
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;

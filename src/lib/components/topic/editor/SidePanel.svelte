@@ -20,19 +20,23 @@
   }
 </script>
 
-<div
-  class="side-panel"
-  use:dndzone={{ items: widgets, flipDurationMs: 300, type: "widget" }}
-  on:consider={handleDndConsider}
-  on:finalize={handleDndFinalize}
->
-  {#each widgets as widget (widget._id)}
-    <div class="widget-item">
-      <div>
-        {widget.type}
+<div class="widget-container">
+  <div class="side-panel-header">Draggable Widgets</div>
+
+  <div
+    class="side-panel"
+    use:dndzone={{ items: widgets, flipDurationMs: 300, type: "widget" }}
+    on:consider={handleDndConsider}
+    on:finalize={handleDndFinalize}
+  >
+    {#each widgets as widget (widget._id)}
+      <div class="widget-item">
+        <div>
+          {widget.type}
+        </div>
       </div>
-    </div>
-  {/each}
+    {/each}
+  </div>
 </div>
 
 <style>
@@ -45,6 +49,20 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     position: relative;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .side-panel-header {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   }
 
   .widget-item {

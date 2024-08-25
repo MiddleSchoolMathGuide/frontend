@@ -1,13 +1,7 @@
 <script lang="ts">
-  export let contents: string[] = [""];
+  import type { WidgetUnion } from "$lib/types/widgets.type";
 
-  const intToSpacing = (int: number): string => {
-    let spacing: string = "";
-    for (let index = 0; index < int; index++) {
-      spacing += "  ";
-    }
-    return spacing;
-  };
+  export let widgets: WidgetUnion[] = [];
 </script>
 
 <div class="table-container">
@@ -16,7 +10,7 @@
   </div>
   <div class="contents">
     <!-- Placeholder for now, format string[] later -->
-    <p class="option-text">{contents}</p>
+    <p class="option-text">{widgets}</p>
   </div>
 </div>
 

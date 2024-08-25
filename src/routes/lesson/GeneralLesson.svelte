@@ -3,10 +3,11 @@
   import LessonBar from "$lib/components/lesson/LessonBar.svelte";
   import ProgressBar from "$lib/components/lesson/ProgressBar.svelte";
   import TableOfContents from "$lib/components/lesson/TableOfContents.svelte";
-  import type { ILesson } from "$lib/types/topic.type";
+  import Header from "$lib/components/lesson/widgets/Header.svelte";
+  import SubHeader from "$lib/components/lesson/widgets/SubHeader.svelte";
+  import type { ILesson, ITopic, IUnit } from "$lib/types/topic.type";
+  import { WidgetType } from "$lib/types/widgets.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
-  import { WidgetType, type WidgetUnion } from "$lib/types/widgets.type";
-  import Loading from "$lib/components/lesson/Loading.svelte";
   import { onMount } from "svelte";
 
   export let names: {
@@ -21,93 +22,97 @@
     programmingNames: [""],
   };
 
-  export let contents: string[] = [""];
+  let units: Array<IUnit> = [];
+  let lessons: Array<ILesson> = [];
+  let topic: ITopic;
+  let lesson: ILesson;
 
-  export let path: {
-    lessonName: string;
-    topic: string;
-    unit: string;
-  } = {
-    lessonName: "",
-    topic: "",
-    unit: "",
-  };
-
-  let isResponse: boolean = true;
-
-  let { lessonName, topic, unit } = path;
-
-  let docHeight: number = 0;
+  let loaded: boolean = false;
 
   onMount(() => {
-    docHeight = document.documentElement.scrollHeight;
-    //Change if onMount will not work
-    fetchLessonContent();
-  });
+    let pathparts = window.location.pathname.slice(3).split("/");
+    const topic_title = pathparts[0];
+    const unit_title = pathparts[1];
+    const lesson_title = pathparts[2];
 
-  const fetchLessonContent = async () => {
-    try {
-      const response = await fetch(`/api/t/${topic}/${unit}/${lessonName}`, {
-        method: "GET",
+    /* Fetch units */
+    const units_promise = fetch(`/api/list/${topic_title}`)
+      .then((data) => data.json())
+      .then((respone: ResponseDataWrapper<Array<IUnit>>) => {
+        if (!respone.ok) {
+          /* TODO: Error handling */
+          console.error("Error while loading units list");
+          return;
+        }
+
+        units = respone.data;
       });
 
-      if (!response.ok) {
-        throw new Error(
-          `Error fetching lesson content: ${response.statusText}`
-        );
-      }
-
-      const data: ResponseDataWrapper<ILesson> = await response.json();
-      const lesson = data.data;
-
-      contents = lesson.widgets.map((widget) => {
-        if (
-          widget.type === WidgetType.Header ||
-          widget.type === WidgetType.SubHeader
-        ) {
-          return (widget as { text: string }).text;
+    /* Fetch lessons */
+    const lessons_promise = fetch(`/api/list/${topic_title}/${unit_title}`)
+      .then((data) => data.json())
+      .then((respone: ResponseDataWrapper<Array<ILesson>>) => {
+        if (!respone.ok) {
+          /* TODO: Error handling */
+          console.error("Error while loading lessons list");
+          return;
         }
-        //Fallback for other widget type
-        return "";
-        //Empty space filter
-      }).filter(text => text !== "");
 
-      names = {
-        problemNames: [],
-        contentNames: [lesson.credits.content],
-        artNames: [lesson.credits.art],
-        programmingNames: [],
-      };
-    } catch (error) {
-      console.error("Failed to fetch lesson content:", error);
-    } finally {
-      isResponse = false;
-    }
-  };
+        lessons = respone.data;
+      });
+
+    /* Fetch whole lesson */
+    const lesson_promise = fetch(
+      `/api/t/${topic_title}/${unit_title}/${lesson_title}`
+    )
+      .then((data) => data.json())
+      .then((respone: ResponseDataWrapper<ITopic>) => {
+        console.log(respone);
+        if (!respone.ok) {
+          /* TODO: Error handling */
+          console.error("Error while loading lesson");
+          return;
+        }
+
+        topic = respone.data;
+        lesson = topic.units[0].lessons[0];
+      });
+
+    Promise.all([units_promise, lessons_promise, lesson_promise]).then(() => {
+      loaded = true;
+    });
+  });
 </script>
 
-{#if isResponse}
-  <Loading />
-{:else}
+{#if loaded}
   <div class="lesson-container">
     <div class="left-materials">
       <LessonBar />
     </div>
     <!-- Central Div for Widgets -->
-    <div class="central-widgets"></div>
-
+    <div class="central-widgets">
+      {#each lesson.widgets as widget (widget._id)}
+        {#if widget.type === WidgetType.Header}
+          <Header {widget} />
+        {:else if widget.type === WidgetType.SubHeader}
+          <SubHeader {widget} />
+        {/if}
+      {/each}
+    </div>
     <div class="right-materials">
       <div class="credits">
         <Credits {names} />
       </div>
       <div class="table-of-contents">
-        <TableOfContents {contents} />
+        <TableOfContents widgets={lesson.widgets} />
       </div>
       <div class="progress-bar">
-        <ProgressBar {docHeight} />
+        <ProgressBar />
       </div>
     </div>
   </div>
+{:else}
+  <!-- Spinner -->
 {/if}
 
 <style>

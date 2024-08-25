@@ -82,7 +82,6 @@
       loaded = true;
     });
   });
-</script>
 
 {#if loaded}
   <div class="lesson-container">

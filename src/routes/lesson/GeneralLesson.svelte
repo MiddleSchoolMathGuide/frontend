@@ -1,6 +1,7 @@
 <script lang="ts">
   import Credits from "$lib/components/lesson/Credits.svelte";
   import LessonBar from "$lib/components/lesson/LessonBar.svelte";
+  import Loading from "$lib/components/lesson/Loading.svelte";
   import ProgressBar from "$lib/components/lesson/ProgressBar.svelte";
   import TableOfContents from "$lib/components/lesson/TableOfContents.svelte";
   import Header from "$lib/components/lesson/widgets/Header.svelte";
@@ -10,16 +11,11 @@
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
   import { onMount } from "svelte";
 
-  export let names: {
+  let names: {
     problemNames: string[];
     contentNames: string[];
     artNames: string[];
     programmingNames: string[];
-  } = {
-    problemNames: [""],
-    contentNames: [""],
-    artNames: [""],
-    programmingNames: [""],
   };
 
   let units: Array<IUnit> = [];
@@ -113,6 +109,7 @@
   </div>
 {:else}
   <!-- Spinner -->
+  <Loading />
 {/if}
 
 <style>

@@ -4,6 +4,11 @@
     contentNames: string[];
     artNames: string[];
     programmingNames: string[];
+  } = {
+    problemNames: [""],
+    contentNames: [""],
+    artNames: [""],
+    programmingNames: [""],
   };
 
   const formatNames = (names: string[]): string => {

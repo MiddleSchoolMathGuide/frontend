@@ -1,5 +1,17 @@
 <script lang="ts">
-  export let docHeight: number;
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      docHeight = document.body.scrollHeight;
+    });
+
+    resizeObserver.observe(document.body);
+
+    return () => resizeObserver.unobserve(document.body);
+  });
+
+  let docHeight: number = 0;
 
   const handleOverfill = (percentFill: number) => {
     while (percentFill > 100) {

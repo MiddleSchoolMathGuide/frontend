@@ -19,3 +19,11 @@ export function timeConverter(unix_timestamp: Date | null) {
     months[o.getMonth()]
   } ${o.getFullYear()} ${o.getHours()}:${o.getMinutes()}:${o.getSeconds()}`;
 }
+
+export function normalizeTitle(title: string): string {
+  /*
+  Normalize the title to be case-insensitive and allow hyphen/space interchangeability.
+  */
+
+  return title.replace(/[-]/g, "[- ]").replace(/[ ]/g, "[- ]").toLowerCase();
+}

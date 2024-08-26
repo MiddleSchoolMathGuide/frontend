@@ -83,7 +83,7 @@
 {#if loaded}
   <div class="lesson-container">
     <div class="left-materials">
-      <LessonBar />
+      <LessonBar {topic} unit_arr={units} lessons_arr={lessons} />
     </div>
     <!-- Central Div for Widgets -->
     <div class="central-widgets">

@@ -1,33 +1,42 @@
 <script lang="ts">
-  import type { LessonButton } from "$lib/types/lesson.type";
+  import type { ILesson, ITopic, IUnit } from "$lib/types/topic.type";
+  import { normalizeTitle } from "$lib/utils/converter";
 
-  let activeIndex = 0;
-
-  export let topic_header: string = "";
-  export let unit_header: string = "";
-  export let lessons: LessonButton[] = [
-    { title: "", link: new URL("about:blank") },
-  ];
+  export let topic: ITopic;
+  export let unit_arr: IUnit[];
+  export let lessons_arr: ILesson[];
 </script>
 
 <div class="lesson-bar-container">
   <div class="lesson-bar">
-    <h1>{topic_header}</h1>
-    <h2><strong>{unit_header}</strong></h2>
+    <h1>{topic ? topic.title : ""}</h1>
+    <h2><strong>{topic ? topic.units[0].title : ""}</strong></h2>
 
     <div class="state-buttons">
-      {#each lessons as button, index}
-        <div
+      {#each lessons_arr as lesson}
+        <a
+          href={topic
+            ? "/t/" +
+              normalizeTitle(topic.title) +
+              "/" +
+              normalizeTitle(topic.units[0].title) +
+              "/" +
+              normalizeTitle(lesson.title)
+            : ""}
           class="state-button"
           style="border-color: red; 
                     width: 100%; 
-                    background-color: {index === activeIndex
+                    background-color: {lesson.index ===
+          (topic ? topic.units[0].lessons[0].index : 0)
             ? '#ffcccc'
             : 'transparent'}; 
-                    color: {index === activeIndex ? 'red' : 'inherit'};"
+                    color: {lesson.index ===
+          (topic ? topic.units[0].lessons[0].index : 0)
+            ? 'red'
+            : 'inherit'};"
         >
-          {button.title}
-        </div>
+          {lesson.title}
+        </a>
       {/each}
     </div>
   </div>

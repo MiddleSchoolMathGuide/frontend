@@ -8,7 +8,7 @@
     problemNames: [""],
     contentNames: [""],
     artNames: [""],
-    programmingNames: [""],
+    programmingNames: ["Lucas Hufnagel", "Mark Devenyi"],
   };
 
   const formatNames = (names: string[]): string => {

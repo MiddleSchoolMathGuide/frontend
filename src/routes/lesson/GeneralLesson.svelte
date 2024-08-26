@@ -63,7 +63,6 @@
     )
       .then((data) => data.json())
       .then((respone: ResponseDataWrapper<ITopic>) => {
-        console.log(respone);
         if (!respone.ok) {
           /* TODO: Error handling */
           console.error("Error while loading lesson");

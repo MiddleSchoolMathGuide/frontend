@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let flavorText: string = "Basic";
   export let level: number = 0;
 
   //Colors correspond to level
@@ -14,6 +13,17 @@
   const retrieveColor = (index: number): string => {
     return index < level ? difficulties[level - 1] : "#D9D9D9";
   };
+
+  const levelToText = (level: number): string => {
+    switch (level) {
+      case 0:
+        return "Basic";
+      case 1:
+        return "Easy";
+      default:
+        return "Basic";
+    }
+  }
 </script>
 
 <div class="difficulty-container">
@@ -41,7 +51,7 @@
     class="flavor-text"
     style="color:{difficulties[level - 1]}"
   >
-    {flavorText}
+    {levelToText(level)}
   </p>
 </div>
 

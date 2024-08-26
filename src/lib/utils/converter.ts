@@ -13,9 +13,9 @@ const months = [
   "Dec",
 ];
 
-export function timeConverter(unix_timestamp: Date | null) {
-  const o = new Date(unix_timestamp ?? 0);
-  return `${o.getDay()} ${
+export function timeConverter(unix_timestamp: number | null) {
+  const o = new Date((unix_timestamp ?? 0) * 1000);
+  return `${o.getUTCDate()} ${
     months[o.getMonth()]
   } ${o.getFullYear()} ${o.getHours()}:${o.getMinutes()}:${o.getSeconds()}`;
 }

@@ -65,7 +65,7 @@
 <header>
   <div class="logo">
     <a class="image-link" href="/">
-      <img class="logo" src="msmg-logo.png" alt="MSMG" />
+      <img class="logo" src="static/msmg-logo.png" alt="MSMG" />
     </a>
   </div>
   <div class="nav-section">

@@ -47,7 +47,7 @@
 
 <div class="search-box">
   <div class="search-icon">
-    <img src="magnifying-glass-solid.svg" alt="search" />
+    <img src="static/magnifying-glass-solid.svg" alt="search" />
   </div>
   <input
     type="text"

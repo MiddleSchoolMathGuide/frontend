@@ -3,26 +3,30 @@
 
   let currentInput: string = "";
 
-  //Likely replace later with full lessons from ts file
-  let lessons: { title: string; link: string, tags: string[] }[] = [];
+  interface Lesson {
+    title: string;
+    description: string;
+  }
 
-  let lessonsSearchedFor: { title: string; link: string, tags: string[] }[] = [];
+  let lessons: Lesson[] = [];
+
+  let lessonsSearchedFor: Lesson[] = [];
   
 
-  //To be changed if necessary for API
    const fetchLessons = async () => {
     try {
-      const response = await fetch('/topics/units/lessons');
+      const response = await fetch('/api/list');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
+      const data: Lesson[] = await response.json();
       lessons = data;
-      updateSearch(); 
     } catch (error) {
       console.error('Failed to fetch lessons:', error);
     }
   };
+  
+  $: updateSearch();
 
   const updateSearch = () => {
     const lowerCaseInput = currentInput.trim().toLowerCase();
@@ -31,11 +35,9 @@
       lessonsSearchedFor = [];
     } else {
       lessonsSearchedFor = lessons.filter((lesson) => {
-        // Check if the lesson title includes the search input
         const titleMatch = lesson.title.toLowerCase().includes(lowerCaseInput);
-        // Check if any of the tags include the search input
-        const tagsMatch = lesson.tags.some(tag => tag.toLowerCase().includes(lowerCaseInput));
-        return titleMatch || tagsMatch;
+        const descMatch = lesson.description.toLowerCase().includes(lowerCaseInput);
+        return titleMatch || descMatch;
       });
     }
   };
@@ -59,8 +61,9 @@
 
 <div class="results">
   <div class="lesson-result">
-    {#each lessonsSearchedFor as { title, link }}
-      <p class="lesson"><a class="lesson-clickable" href={link}>{title}</a></p>
+    <!-- Title currently assumed as link -->
+    {#each lessonsSearchedFor as { title }}
+      <p class="lesson"><a class="lesson-clickable" href={title}>{title}</a></p>
     {/each}
   </div>
 </div>

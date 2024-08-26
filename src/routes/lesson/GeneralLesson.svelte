@@ -1,5 +1,6 @@
 <script lang="ts">
   import Credits from "$lib/components/lesson/Credits.svelte";
+  import Difficulty from "$lib/components/lesson/Difficulty.svelte";
   import LessonBar from "$lib/components/lesson/LessonBar.svelte";
   import Loading from "$lib/components/lesson/Loading.svelte";
   import ProgressBar from "$lib/components/lesson/ProgressBar.svelte";
@@ -86,6 +87,7 @@
     </div>
     <!-- Central Div for Widgets -->
     <div class="central-widgets">
+      <Difficulty level={topic ? topic.units[0].lessons[0].difficulty : 0} />
       {#each lesson.widgets as widget (widget._id)}
         {#if widget.type === WidgetType.Header}
           <Header {widget} />

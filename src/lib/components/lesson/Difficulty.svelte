@@ -1,7 +1,7 @@
 <script lang="ts">
   export let level: number = 0;
 
-  //Colors correspond to level
+  /* Colors correspond to level */
   const difficulties: string[] = [
     "#4c9440",
     "#c0c243",
@@ -15,15 +15,24 @@
   };
 
   const levelToText = (level: number): string => {
+    /* Based on the greatest game ever, Skyrim: The Elder Scroll V */
     switch (level) {
       case 0:
-        return "Basic";
+        return "None";
       case 1:
-        return "Easy";
+        return "Novice";
+      case 2:
+        return "Apprentice";
+      case 3:
+        return "Adept";
+      case 4:
+        return "Expert";
+      case 5:
+        return "Master";
       default:
-        return "Basic";
+        return "Error";
     }
-  }
+  };
 </script>
 
 <div class="difficulty-container">
@@ -47,10 +56,7 @@
     class="difficulty-tile"
     style="background-color: {retrieveColor(4)}"
   ></div>
-  <p
-    class="flavor-text"
-    style="color:{difficulties[level - 1]}"
-  >
+  <p class="flavor-text" style="color:{difficulties[level - 1]}">
     {levelToText(level)}
   </p>
 </div>

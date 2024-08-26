@@ -19,3 +19,6 @@ export type WHeader = {
 export type WSubHeader = {
   text: string;
 } & Widget;
+
+
+export const HeaderTypes = [WidgetType.Header, WidgetType.SubHeader];

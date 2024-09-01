@@ -13,9 +13,10 @@
   let lessonsSearchedFor: Lesson[] = [];
   
 
-   const fetchLessons = async () => {
+   const fetchLessons = async (topic?: string) => {
     try {
-      const response = await fetch('/api/list');
+      const url = topic ? `/api/list/${topic}` : '/api/list/';
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -34,11 +35,8 @@
     if (lowerCaseInput === "") {
       lessonsSearchedFor = [];
     } else {
-      lessonsSearchedFor = lessons.filter((lesson) => {
-        const titleMatch = lesson.title.toLowerCase().includes(lowerCaseInput);
-        const descMatch = lesson.description.toLowerCase().includes(lowerCaseInput);
-        return titleMatch || descMatch;
-      });
+      fetchLessons(lowerCaseInput);
+      lessonsSearchedFor = lessons;
     }
   };
 
@@ -61,9 +59,9 @@
 
 <div class="results">
   <div class="lesson-result">
-    <!-- Title currently assumed as link -->
+    <!-- Unable to fix w/o hub for now, -->
     {#each lessonsSearchedFor as { title }}
-      <p class="lesson"><a class="lesson-clickable" href={title}>{title}</a></p>
+      <p class="lesson"><a class="lesson-clickable" href="">{title}</a></p>
     {/each}
   </div>
 </div>

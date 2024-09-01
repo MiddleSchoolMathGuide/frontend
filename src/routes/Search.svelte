@@ -1,48 +1,43 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
 
-  let currentInput: string = "";
-
-  interface Lesson {
+  interface Wrapper<T> {
+    topics: T[];
+    units: T[];
+    lessons: T[];
+  }
+  interface Data {
     title: string;
     description: string;
   }
 
-  let lessons: Lesson[] = [];
+  let currentInput: string = "";
+  let fetched: Wrapper<Data>;
 
-  let lessonsSearchedFor: Lesson[] = [];
-  
-
-   const fetchLessons = async (topic?: string) => {
+  const fetchMatches = async (tag: string) => {
     try {
-      const url = topic ? `/api/list/${topic}` : '/api/list/';
-      const response = await fetch(url);
+      const response = await fetch(`/api/search/${tag}`);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
-      const data: Lesson[] = await response.json();
-      lessons = data;
+      const data: ResponseDataWrapper<Wrapper<Data>> = await response.json();
+      fetched = data.data;
     } catch (error) {
-      console.error('Failed to fetch lessons:', error);
+      console.error("Failed to fetch lessons:", error);
     }
   };
-  
+
   $: updateSearch();
 
   const updateSearch = () => {
     const lowerCaseInput = currentInput.trim().toLowerCase();
 
     if (lowerCaseInput === "") {
-      lessonsSearchedFor = [];
+      fetched = { topics: [], units: [], lessons: [] };
     } else {
-      fetchLessons(lowerCaseInput);
-      lessonsSearchedFor = lessons;
+      fetchMatches(lowerCaseInput);
     }
   };
-
-  onMount(() => {
-    fetchLessons();
-  });
 </script>
 
 <div class="search-box">
@@ -60,7 +55,7 @@
 <div class="results">
   <div class="lesson-result">
     <!-- Unable to fix w/o hub for now, -->
-    {#each lessonsSearchedFor as { title }}
+    {#each fetched.topics as { title }}
       <p class="lesson"><a class="lesson-clickable" href="">{title}</a></p>
     {/each}
   </div>

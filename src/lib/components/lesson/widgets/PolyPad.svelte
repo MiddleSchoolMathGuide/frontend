@@ -4,9 +4,9 @@
   export let widget: WPolyPad;
 
   let width: number =
-    widget.width != undefined && widget.width > 0 ? widget.width : 750;
+    widget.width !== undefined && widget.width > 0 ? widget.width : 750;
   let height: number =
-    widget.height != undefined && widget.height > 0 ? widget.height : 750;
+    widget.height !== undefined && widget.height > 0 ? widget.height : 500;
 </script>
 
 <iframe

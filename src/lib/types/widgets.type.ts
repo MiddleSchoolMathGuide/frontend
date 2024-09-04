@@ -1,4 +1,4 @@
-export type WidgetUnion = WHeader | WSubHeader;
+export type WidgetUnion = WHeader | WSubHeader | WDesmos | WPolyPad;
 
 export type Widget = {
   type: WidgetType;
@@ -34,9 +34,4 @@ export type WDesmos = {
   height?: number;
 } & Widget;
 
-export const HeaderTypes = [
-  WidgetType.Header,
-  WidgetType.SubHeader,
-  WidgetType.PolyPad,
-  WidgetType.Desmos,
-];
+export const HeaderTypes = [WidgetType.Header, WidgetType.SubHeader];

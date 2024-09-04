@@ -5,11 +5,14 @@
   import Loading from "$lib/components/lesson/Loading.svelte";
   import ProgressBar from "$lib/components/lesson/ProgressBar.svelte";
   import TableOfContents from "$lib/components/lesson/TableOfContents.svelte";
+  import Desmos from "$lib/components/lesson/widgets/Desmos.svelte";
   import Header from "$lib/components/lesson/widgets/Header.svelte";
+  import PolyPad from "$lib/components/lesson/widgets/PolyPad.svelte";
   import SubHeader from "$lib/components/lesson/widgets/SubHeader.svelte";
   import type { ILesson, ITopic, IUnit } from "$lib/types/topic.type";
   import { WidgetType } from "$lib/types/widgets.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
+  import { __notypecheck } from "$lib/utils/typescript";
   import { onMount } from "svelte";
 
   let names: {
@@ -90,9 +93,15 @@
       <Difficulty level={topic ? topic.units[0].lessons[0].difficulty : 0} />
       {#each lesson.widgets as widget (widget._id)}
         {#if widget.type === WidgetType.Header}
-          <Header {widget} />
+          <Header widget={__notypecheck(widget)} />
         {:else if widget.type === WidgetType.SubHeader}
-          <SubHeader {widget} />
+          <SubHeader widget={__notypecheck(widget)} />
+        {:else if widget.type === WidgetType.Desmos}
+          <Desmos widget={__notypecheck(widget)} />
+        {:else if widget.type === WidgetType.PolyPad}
+          <PolyPad widget={__notypecheck(widget)} />
+        {:else}
+          <p>Unimplemented widget type: "{widget.type}"</p>
         {/if}
       {/each}
     </div>

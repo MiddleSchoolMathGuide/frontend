@@ -1,11 +1,29 @@
 <script lang="ts">
   import { dndzone, type DndEvent } from "svelte-dnd-action";
   import { type WidgetUnion, WidgetType } from "$lib/types/widgets.type";
+
+  // @ts-ignore
   import { v4 as uuidv4 } from "uuid";
 
   const allWidgets: WidgetUnion[] = [
     { text: "", type: WidgetType.Header, _id: uuidv4(), new: true },
     { text: "", type: WidgetType.SubHeader, _id: uuidv4(), new: true },
+    {
+      inputFunction: "",
+      width: 0,
+      height: 0,
+      type: WidgetType.Desmos,
+      _id: uuidv4(),
+      new: true,
+    },
+    {
+      embedLink: "",
+      width: 0,
+      height: 0,
+      type: WidgetType.PolyPad,
+      _id: uuidv4(),
+      new: true,
+    },
   ];
 
   let widgets = structuredClone(allWidgets);

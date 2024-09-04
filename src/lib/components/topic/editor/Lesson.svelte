@@ -4,6 +4,9 @@
   import { dndzone, type DndEvent } from "svelte-dnd-action";
   import Header from "./widgets/EHeader.svelte";
   import SubHeader from "./widgets/ESubHeader.svelte";
+  import Desmos from "./widgets/EDesmos.svelte";
+  import PolyPad from "./widgets/EPolyPad.svelte";
+  import { __notypecheck } from "$lib/utils/typescript";
 
   export let lesson: ILesson;
   let expanded = false;
@@ -99,12 +102,18 @@
       on:consider={handleDndConsider}
       on:finalize={handleDndFinalize}
     >
-      
       {#each lesson.widgets as widget (widget._id)}
         {#if widget.type === WidgetType.Header}
-          <Header {widget} />
+          <!-- svelte-ignore ts-2322 -->
+          <Header widget={__notypecheck(widget)} />
         {:else if widget.type === WidgetType.SubHeader}
-          <SubHeader {widget} />
+          <SubHeader widget={__notypecheck(widget)} />
+        {:else if widget.type === WidgetType.Desmos}
+          <Desmos widget={__notypecheck(widget)} />
+        {:else if widget.type === WidgetType.PolyPad}
+          <PolyPad widget={__notypecheck(widget)} />
+        {:else}
+          <p>Unimplemented widget type: "{widget.type}"</p>
         {/if}
       {/each}
     </div>

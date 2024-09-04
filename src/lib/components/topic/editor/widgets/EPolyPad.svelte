@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { WPolyPad } from "$lib/types/widgets.type";
 
-  let allowWidth:boolean = false;
-  let allowHeight:boolean = false;
+  let allowWidth: boolean = false;
+  let allowHeight: boolean = false;
 
   export let widget: WPolyPad;
 </script>
@@ -17,7 +17,7 @@
   />
 
   <label for="allowWidth">Width?</label>
-  <input id="allowWidth" type="checkbox" bind:value={allowWidth}/>
+  <input id="allowWidth" type="checkbox" bind:value={allowWidth} />
   {#if allowWidth}
     <label for="width">Width</label>
     <input
@@ -29,7 +29,7 @@
   {/if}
 
   <label for="allowHeight">Height?</label>
-  <input id="allowHeight" type="checkbox" bind:value={allowHeight}/>
+  <input id="allowHeight" type="checkbox" bind:value={allowHeight} />
   {#if allowHeight}
     <label for="height">Height</label>
     <input
@@ -39,7 +39,4 @@
       placeholder="Enter height"
     />
   {/if}
-
 </div>
-
-

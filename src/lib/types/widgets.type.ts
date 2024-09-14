@@ -30,8 +30,6 @@ export type WPolyPad = {
 
 export type WDesmos = {
   inputFunction?: string;
-  width?: number;
-  height?: number;
 } & Widget;
 
 export const HeaderTypes = [WidgetType.Header, WidgetType.SubHeader];

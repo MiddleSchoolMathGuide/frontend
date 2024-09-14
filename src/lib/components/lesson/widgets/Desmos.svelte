@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { WDesmos } from "$lib/types/widgets.type";
   import { onMount } from "svelte";
+
+  /** @ts-ignore */
   import { v4 as uuidv4 } from "uuid";
 
   export let widget: WDesmos;

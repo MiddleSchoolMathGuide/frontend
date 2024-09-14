@@ -13,6 +13,7 @@
     let desmosScript = document.createElement("script");
     desmosScript.src =
       "https://www.desmos.com/api/v1.9/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6";
+    document.appendChild(desmosScript);
 
     desmosScript.onload = () => {
       if (window.Desmos) {
@@ -33,7 +34,6 @@
         console.error("Desmos library is not loaded.");
       }
     };
-    document.head.appendChild(desmosScript);
   });
 </script>
 

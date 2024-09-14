@@ -17,7 +17,7 @@
   />
 
   <label for="allowWidth">Width?</label>
-  <input id="allowWidth" type="checkbox" bind:value={allowWidth} />
+  <input id="allowWidth" type="checkbox" bind:checked={allowWidth} />
   {#if allowWidth}
     <label for="width">Width</label>
     <input
@@ -29,7 +29,7 @@
   {/if}
 
   <label for="allowHeight">Height?</label>
-  <input id="allowHeight" type="checkbox" bind:value={allowHeight} />
+  <input id="allowHeight" type="checkbox" bind:checked={allowHeight} />
   {#if allowHeight}
     <label for="height">Height</label>
     <input

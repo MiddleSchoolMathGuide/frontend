@@ -7,9 +7,9 @@
 
   /* Debug API key */
   const apiKey = "dcb31709b452b1cf9dc26972add0fda6";
+  const graphHeight = 500;
+
   let graphDivId = uuidv4();
-  let graphWidth = 500;
-  let graphHeight = 400;
 
   onMount(() => {
     let script = document.createElement("script");
@@ -31,8 +31,5 @@
 </script>
 
 <div>
-  <div
-    id={graphDivId}
-    style="width: {graphWidth}px; height: {graphHeight}px;"
-  ></div>
+  <div id={graphDivId} style="height: {graphHeight}px;"></div>
 </div>

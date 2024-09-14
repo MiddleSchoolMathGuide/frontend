@@ -9,11 +9,12 @@
     widget.height !== undefined && widget.height > 0 ? widget.height : 500;
 </script>
 
-<iframe
-  title="PolyPad"
-  {width}
-  {height}
-  src="https://polypad.amplify.com/embed/{widget.embedLink}"
-  frameborder="0"
-  allowfullscreen
-></iframe>
+<div>
+  <iframe
+    title="PolyPad"
+    {width}
+    {height}
+    src="https://polypad.amplify.com/embed/{widget.embedLink}"
+    frameborder="0"
+  ></iframe>
+</div>

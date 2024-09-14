@@ -1,40 +1,38 @@
 <script lang="ts">
   import type { WDesmos } from "$lib/types/widgets.type";
   import { onMount } from "svelte";
+  import { v4 as uuidv4 } from "uuid";
 
   export let widget: WDesmos;
 
-  let width: number =
-    widget.width != undefined && widget.width > 0 ? widget.width : 750;
-  let height: number =
-    widget.height != undefined && widget.height > 0 ? widget.height : 500;
+  /* Debug API key */
+  const apiKey = "dcb31709b452b1cf9dc26972add0fda6";
+  let graphDivId = uuidv4();
+  let graphWidth = 500;
+  let graphHeight = 400;
 
   onMount(() => {
-    let desmosScript = document.createElement("script");
-    desmosScript.src =
-      "https://www.desmos.com/api/v1.9/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6";
-    document.appendChild(desmosScript);
+    let script = document.createElement("script");
+    script.src =
+      "https://www.desmos.com/api/v1.3/calculator.js?apiKey=" + apiKey;
+    document.head.append(script);
 
-    desmosScript.onload = () => {
-      if (window.Desmos) {
-        const elt = document.getElementById("desmos");
-        if (elt) {
-          const calculator = window.Desmos.GraphingCalculator(elt, {
-            expressions: true,
-          });
+    script.onload = function () {
+      let elt = document.getElementById(graphDivId);
 
-          if (widget.inputFunction) {
-            calculator.setExpression({
-              id: "givenLine",
-              latex: widget.inputFunction,
-            });
-          }
-        }
-      } else {
-        console.error("Desmos library is not loaded.");
-      }
+      /** @ts-ignore */
+      let calculator = Desmos.GraphingCalculator(elt, {
+        expressions: true,
+        expressionsCollapsed: true,
+      });
+      calculator.setExpression({ id: "graph1", latex: widget.inputFunction });
     };
   });
 </script>
 
-<div id="desmos" style="width:{width}px; height:{height}px;"></div>
+<div>
+  <div
+    id={graphDivId}
+    style="width: {graphWidth}px; height: {graphHeight}px;"
+  ></div>
+</div>

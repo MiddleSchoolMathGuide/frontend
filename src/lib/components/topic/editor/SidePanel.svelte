@@ -35,7 +35,9 @@
   }
 
   function handleDndFinalize(_: CustomEvent<DndEvent<WidgetUnion>>) {
-    widgets = structuredClone(allWidgets);
+    widgets = structuredClone(allWidgets).map((widget) => {
+      return { ...widget, _id: uuidv4() };
+    });
   }
 </script>
 

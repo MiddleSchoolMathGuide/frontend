@@ -21,7 +21,11 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@cartamd/plugin-math": "^4.1.0",
 		"@sveltejs/adapter-static": "^3.0.2",
+		"carta-md": "^4.5.0",
+		"isomorphic-dompurify": "^2.16.0",
+		"katex": "^0.16.11",
 		"svelte-dnd-action": "^0.9.49",
 		"uuid": "^10.0.0"
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ITopicMinimal, IUnitMinimal } from "$lib/types/topic.type";
+  import type { ITopicMinimal } from "$lib/types/topic.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
   import { onMount } from "svelte";
 

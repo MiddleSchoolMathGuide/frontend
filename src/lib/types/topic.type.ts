@@ -30,6 +30,7 @@ export type IUnit = {
 export type IUnitMinimal = {
   title: string;
   description: string;
+  lessons?: ILessonMinimal[];
 };
 
 export type ILesson = {
@@ -48,7 +49,7 @@ export type ILesson = {
   index?: number;
 };
 
-export type ILessonMinial = {
+export type ILessonMinimal = {
   title: string;
   description: string;
 };

@@ -11,6 +11,11 @@ export type ITopic = {
   index?: number;
 };
 
+export type ITopicMinimal = {
+  title: string;
+  description: string;
+};
+
 export type IUnit = {
   title: string;
   icon: string;
@@ -20,6 +25,11 @@ export type IUnit = {
   _id?: string;
   new?: boolean;
   index?: number;
+};
+
+export type IUnitMinimal = {
+  title: string;
+  description: string;
 };
 
 export type ILesson = {
@@ -36,6 +46,11 @@ export type ILesson = {
   _id?: string;
   new?: boolean;
   index?: number;
+};
+
+export type ILessonMinial = {
+  title: string;
+  description: string;
 };
 
 export enum Status {

@@ -12,6 +12,7 @@ export enum WidgetType {
   SubHeader = "SubHeader",
   PolyPad = "PolyPad",
   Desmos = "Desmos",
+  Paragraph = "Paragraph",
 }
 
 export type WHeader = {
@@ -30,6 +31,10 @@ export type WPolyPad = {
 
 export type WDesmos = {
   inputFunction?: string;
+} & Widget;
+
+export type WParagraph = {
+  data: string;
 } & Widget;
 
 export const HeaderTypes = [WidgetType.Header, WidgetType.SubHeader];

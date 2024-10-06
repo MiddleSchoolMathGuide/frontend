@@ -10,17 +10,18 @@
     { text: "", type: WidgetType.SubHeader, _id: uuidv4(), new: true },
     {
       inputFunction: "",
-      width: 0,
-      height: 0,
       type: WidgetType.Desmos,
       _id: uuidv4(),
       new: true,
     },
     {
       embedLink: "",
-      width: 0,
-      height: 0,
       type: WidgetType.PolyPad,
+      _id: uuidv4(),
+      new: true,
+    },
+    {
+      type: WidgetType.Paragraph,
       _id: uuidv4(),
       new: true,
     },

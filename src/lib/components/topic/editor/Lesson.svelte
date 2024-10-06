@@ -6,6 +6,7 @@
   import SubHeader from "./widgets/ESubHeader.svelte";
   import Desmos from "./widgets/EDesmos.svelte";
   import PolyPad from "./widgets/EPolyPad.svelte";
+  import Paragraph from "./widgets/EParagraph.svelte";
   import { __notypecheck } from "$lib/utils/typescript";
 
   export let lesson: ILesson;
@@ -112,6 +113,8 @@
           <Desmos widget={__notypecheck(widget)} />
         {:else if widget.type === WidgetType.PolyPad}
           <PolyPad widget={__notypecheck(widget)} />
+        {:else if widget.type === WidgetType.Paragraph}
+          <Paragraph widget={__notypecheck(widget)} />
         {:else}
           <p>Unimplemented widget type: "{widget.type}"</p>
         {/if}

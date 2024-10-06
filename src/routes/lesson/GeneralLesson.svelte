@@ -7,6 +7,7 @@
   import TableOfContents from "$lib/components/lesson/TableOfContents.svelte";
   import Desmos from "$lib/components/lesson/widgets/Desmos.svelte";
   import Header from "$lib/components/lesson/widgets/Header.svelte";
+  import Paragraph from "$lib/components/lesson/widgets/Paragraph.svelte";
   import PolyPad from "$lib/components/lesson/widgets/PolyPad.svelte";
   import SubHeader from "$lib/components/lesson/widgets/SubHeader.svelte";
   import type { ILesson, ITopic, IUnit } from "$lib/types/topic.type";
@@ -100,6 +101,8 @@
           <Desmos widget={__notypecheck(widget)} />
         {:else if widget.type === WidgetType.PolyPad}
           <PolyPad widget={__notypecheck(widget)} />
+        {:else if widget.type === WidgetType.Paragraph}
+          <Paragraph widget={__notypecheck(widget)} />
         {:else}
           <p>Unimplemented widget type: "{widget.type}"</p>
         {/if}

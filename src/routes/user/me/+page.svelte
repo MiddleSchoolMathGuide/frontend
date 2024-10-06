@@ -1,5 +1,5 @@
 <script lang="ts">
-  import UserData from "$lib/components/user/UserData.svelte";
+  import UserData from "./UserData.svelte";
   import type { UserAPIResponse } from "$lib/types/profile.type";
   import type { ResponseDataWrapper } from "$lib/types/wrapper.type";
   import { onMount } from "svelte";
